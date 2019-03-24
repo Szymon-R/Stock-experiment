@@ -408,9 +408,9 @@ public class Question4 extends javax.swing.JFrame {
                         protected void done() {
                             ws.setVisible(false);
                             setVisible(false);
-                            Question2 q2=new Question2(ClientSide1);
-                            q2.setLocationRelativeTo(null);
-                            q2.setVisible(true);
+                            stock_screen ss=new stock_screen(ClientSide1);
+                            ss.setLocationRelativeTo(null);
+                            ss.setVisible(true);
                         }
                     };
                     disable();

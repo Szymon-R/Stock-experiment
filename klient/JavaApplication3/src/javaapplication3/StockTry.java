@@ -26,7 +26,7 @@ public class StockTry {
      */
     public static void main(String[] args) throws IOException{
         int quotes_number=50;
-        Quote Coca_Cola=new Quote("Coca Cola","https://www.nasdaq.com/symbol/ko/historical","https://www.nasdaq.com/symbol/ko/real-time");
+        Quote Coca_Cola=new Quote("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/historical","https://www.nasdaq.com/symbol/ko/real-time");
         Coca_Cola.get_historical_data(quotes_number);
         Coca_Cola.update_value();
       //  Quote Google=new Quote("Google","https://www.nasdaq.com/symbol/goog/historical");

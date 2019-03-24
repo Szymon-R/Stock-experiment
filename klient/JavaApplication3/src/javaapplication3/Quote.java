@@ -23,14 +23,16 @@ import java.util.Date;
  */
 public class Quote {
     String name;
+    String symbol;
     List<Single_item> quotes = new ArrayList<Single_item> ();
     URL historical_url;
     URL update_url;
     String current_price;
     int invested;
-    public Quote(String name, String historical_url, String update_url)
+    public Quote(String name,String symbol, String historical_url, String update_url)
     {
         this.name=name;
+        this.symbol=symbol;
         try
         {
             this.historical_url=new URL(historical_url);
@@ -44,6 +46,10 @@ public class Quote {
     public String get_name()
     {
         return this.name;
+    }
+        public String get_symbol()
+    {
+        return this.symbol;
     }
    private Date yesterday()
    {

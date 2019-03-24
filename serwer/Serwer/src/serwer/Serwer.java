@@ -1,8 +1,10 @@
 package serwer;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.PrintStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.ServerSocket;
@@ -86,7 +88,10 @@ public class Serwer {
 class clientThread extends Thread {
 
   private DataInputStream is = null;
-  private PrintStream os = null;
+  OutputStream outToClient;
+  DataOutputStream os;
+  InputStream inFromClient;
+  DataInputStream in;
   private Socket clientSocket = null;
   private final clientThread[] clients;
   private int maxClientsCount;
@@ -113,14 +118,14 @@ class clientThread extends Thread {
           return "";
       }
   }
-  public boolean write_data(OutputStream os, String data)
+  public boolean write_data(DataOutputStream os, String data)
   {
       System.out.println("Co jest");
       try
       {
         System.out.println("Rozpoczynanie wysyłania");
         System.out.println("Nie czekam");
-        os.write(data.getBytes(Charset.forName("UTF-8")));   
+        os.writeUTF(data); 
         System.out.println("Wysłano");
         return true;
       }
@@ -138,8 +143,11 @@ class clientThread extends Thread {
       /*
        * Create input and output streams for this client.
        */
-      is = new DataInputStream(clientSocket.getInputStream());
-      os = new PrintStream(clientSocket.getOutputStream());
+
+      inFromClient = clientSocket.getInputStream();
+      outToClient = clientSocket.getOutputStream();
+      os=new DataOutputStream(outToClient);
+      is=new DataInputStream(inFromClient);
 
 //waiting for client to send name and surname
 
@@ -247,7 +255,15 @@ class clientThread extends Thread {
                 break;
             }
       }
-      
+      while (true) 
+      {
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
       is.close();
       os.close();
       clientSocket.close();

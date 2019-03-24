@@ -16,7 +16,7 @@ public class clientImage {
     String name;
     String surname;
     Vector<String> answers=new Vector<String>(); 
-    
+    Vector<Investment> invest=new Vector<Investment>();
     public void set_ID(String data) throws Exception
     {
         this.ID=data;
@@ -31,5 +31,13 @@ public class clientImage {
         index1=data.indexOf('#');
         this.surname=(data.substring(index2+1,index1));
     }
-
+    public void read_investments(String data)
+    {
+        int counter=0;
+        while(!"".equals(data))
+        {
+            invest.add(new Investment());
+            data=invest.get(counter).parse_data(data);
+        }
+    }
 }

@@ -114,19 +114,14 @@ public class ClientSide
     
      public String read_data(int timeout)
     {
+        String data;
         try
         {
             while(true){
             if(in.available()>=4)
             {
                 System.out.println("Cos przyszlo");
-                ByteArrayOutputStream result = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = in.read(buffer)) != -1) {
-                    result.write(buffer, 0, length);
-                }
-                String data=result.toString("UTF-8");
+                data=in.readUTF();
                 return data;
             }
             }

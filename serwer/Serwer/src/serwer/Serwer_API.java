@@ -24,6 +24,7 @@ public class Serwer_API extends javax.swing.JFrame {
     int counter=0;
     DefaultTableModel model;
     Vector<clientImage> clients=new Vector<clientImage>();
+    Vector<Quote_price> quotes=new Vector<Quote_price>();
     public Serwer_API(BlockingQueue<String> input_queue, BlockingQueue<String> output_queue) 
     {
         this.input_queue=input_queue;
@@ -219,16 +220,34 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             process_answer(8);
         }
-        
+        step2=1;
+        while(step2==1)
+        {
+            process_answer(9);
+        }
         
         }
       };
+
 
     thread.start();
 
         
     }
+        
 
+    public void get_prices()
+    {
+        quotes.add(new Quote_price("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/real-time"));
+        quotes.add(new Quote_price("Google","GOOG","https://www.nasdaq.com/symbol/goog/real-time"));
+        quotes.add(new Quote_price("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/real-time"));
+        for(int i=0; i<quotes.size();++i)
+        {
+            System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
+            quotes.get(i).update_value();
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,11 +276,11 @@ public class Serwer_API extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu"
+                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
