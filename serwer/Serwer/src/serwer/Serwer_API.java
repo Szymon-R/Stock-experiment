@@ -6,6 +6,8 @@
 package serwer;
 
 import static java.awt.image.ImageObserver.ERROR;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 import java.util.concurrent.*;
 import javax.swing.table.DefaultTableModel;
@@ -79,7 +81,6 @@ public class Serwer_API extends javax.swing.JFrame {
         int position;
             try
             {
-                
                 if(!input_queue.isEmpty())
                 {
                     System.out.println("Coś jest w kolejce");
@@ -96,6 +97,10 @@ public class Serwer_API extends javax.swing.JFrame {
                     {
                       System.out.println("Wrzucanie do tablicy");
                       clients.get(position-1).answers.add(get_answer(temp));
+                      if(column==9)
+                      {
+                          clients.get(position-1).read_investments(get_answer(temp));
+                      }
                       model.setValueAt(get_answer(temp), row-1, column);
                       ++counter;
                       if(counter==client_count)
@@ -109,6 +114,15 @@ public class Serwer_API extends javax.swing.JFrame {
             }
             catch(Exception e){};
     }
+    
+    class SortByIncome implements Comparator<clientImage> 
+    { 
+        public int compare(clientImage a, clientImage b) 
+        { 
+            return Double.compare(a.income, b.income);
+        } 
+    } 
+
     public void get_client_info()
     {
 
@@ -152,12 +166,12 @@ public class Serwer_API extends javax.swing.JFrame {
             process_answer(2);
         }
         
-        for(int i=0; i<client_count;++i)
+   /*     for(int i=0; i<client_count;++i)
         {
             try
               {output_queue.put("GOGO");}
             catch(Exception e){};
-        }
+        }*/
         step2=1;
         while(step2==1)
         {
@@ -187,12 +201,12 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             process_answer(5);
         }
-                for(int i=0; i<client_count;++i)
+       /*         for(int i=0; i<client_count;++i)
         {
             try
               {output_queue.put("GOGO");}
             catch(Exception e){};
-        }
+        }*/
         step2=1;
         while(step2==1)
         {
@@ -209,6 +223,17 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             process_answer(7);
         }
+      /*  for(int i=0; i<client_count;++i)
+        {
+            try
+              {output_queue.put("GOGO");}
+            catch(Exception e){};
+        }*/
+        step2=1;
+        while(step2==1)
+        {
+            process_answer(8);
+        }
         for(int i=0; i<client_count;++i)
         {
             try
@@ -218,13 +243,37 @@ public class Serwer_API extends javax.swing.JFrame {
         step2=1;
         while(step2==1)
         {
-            process_answer(8);
+            process_answer(9);
         }
         step2=1;
         while(step2==1)
         {
-            process_answer(9);
+            process_answer(10);
         }
+        step2=1;
+        while(step2==1)
+        {
+            process_answer(11);
+        }
+         for(int i=0; i<client_count;++i)
+        {
+            try
+              {output_queue.put("GOGO");}
+            catch(Exception e){};
+        }
+        
+        try
+            {sleep(10000);;}
+        catch(Exception e){};
+
+        //musi być dodane ID
+        for(int i=0; i<client_count;++i)
+        {
+            try
+              {output_queue.put("1:12345");}
+            catch(Exception e){};
+        }
+        //rozsyłanie wyników
         
         }
       };
@@ -246,7 +295,6 @@ public class Serwer_API extends javax.swing.JFrame {
             System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
             quotes.get(i).update_value();
         }
-
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -266,6 +314,8 @@ public class Serwer_API extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -276,11 +326,11 @@ public class Serwer_API extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja"
+                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja", "Zysk z inwestycji", "Pozycja"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -304,15 +354,15 @@ public class Serwer_API extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(4).setMinWidth(150);
             jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
             jTable1.getColumnModel().getColumn(4).setMaxWidth(200);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(150);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(150);
             jTable1.getColumnModel().getColumn(6).setMinWidth(80);
             jTable1.getColumnModel().getColumn(6).setPreferredWidth(80);
             jTable1.getColumnModel().getColumn(6).setMaxWidth(80);
             jTable1.getColumnModel().getColumn(7).setMinWidth(80);
             jTable1.getColumnModel().getColumn(7).setPreferredWidth(80);
             jTable1.getColumnModel().getColumn(7).setMaxWidth(80);
+            jTable1.getColumnModel().getColumn(11).setResizable(false);
         }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -349,6 +399,20 @@ public class Serwer_API extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Roześlij zysk");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Roześlij punkty");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -362,6 +426,8 @@ public class Serwer_API extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
         );
@@ -374,9 +440,13 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
+                .addGap(132, 132, 132)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103))
+                .addContainerGap())
         );
 
         jButton2.getAccessibleContext().setAccessibleDescription("");
@@ -409,12 +479,40 @@ public class Serwer_API extends javax.swing.JFrame {
         step2=0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        System.out.println("Pobieranie kursów akcji");
+        String temp="";
+        get_prices();
+        for(int i=0; i<clients.size();++i)
+        {
+            clients.get(i).calculate_income(quotes);
+        }
+        for(int i=0; i<clients.size();++i)
+        {
+            clients.get(i).calculate_income(quotes);
+            temp+=clients.get(i).ID+":";
+            temp+=Double.toString(clients.get(i).income);
+            temp+=';';
+            temp+=Integer.toString(client_count)+'#';
+            System.out.println("Serwer api wysyła "+temp);
+            try
+              {output_queue.put(temp);}
+            catch(Exception e){};
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

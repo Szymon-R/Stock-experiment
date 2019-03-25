@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * @author Szymon
  */
 public class Question5 extends javax.swing.JFrame {
-
+       wait_screen ws=new wait_screen();
     String pytanie="Oszacuj jaki będzie Twój zysk z tej inwestycji";
     ClientSide ClientSide1;
     public Question5(ClientSide ClientSide1) {
@@ -162,10 +162,16 @@ public class Question5 extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
-                String text="";
+                String text=jTextField1.getText();
                 System.out.println("sending "+text);
                 while(!ClientSide1.send_data('@'+text+'#'));
                 jTextField1.disable();
+                ws.setVisible(false);
+                setVisible(false);
+                Results_screen rs=new Results_screen(ClientSide1);
+                rs.setLocationRelativeTo(null);
+                rs.setVisible(true);
+
                 return;
             }       
 

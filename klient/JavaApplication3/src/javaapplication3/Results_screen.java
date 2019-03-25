@@ -5,6 +5,10 @@
  */
 package javaapplication3;
 
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
 /**
  *
  * @author Szymon
@@ -13,9 +17,64 @@ public class Results_screen extends javax.swing.JFrame {
 
     String pytanie="Oczekiwanie na wyniki inwestycji";
     ClientSide ClientSide1;
+    int client_count;
+    wait_screen ws=new wait_screen();
     public Results_screen(ClientSide ClientSide1) {
         this.ClientSide1=ClientSide1;
         initComponents();
+        jLabel1.setText(pytanie);
+        jTextField1.setText(jTextField1.getText()+ ClientSide1.one_investment*ClientSide1.max_invests);
+        jButton1.setVisible(false);
+        jTextArea1.setVisible(false);  
+        jScrollPane1.setVisible(false);
+        jComboBox1.setVisible(false);
+        final SwingWorker<String, Void> worker1 =  new SwingWorker<String, Void>() 
+        {
+
+            @Override
+            protected String doInBackground() throws Exception {
+                
+                String result=ClientSide1.read_data(1000);
+                return result;
+            }
+
+                        // Can safely update the GUI from this method.
+            @Override
+            protected void done() 
+            {
+                int start;
+                int end;
+                String output="";
+                try
+                {output=get();}
+                catch(Exception e){};
+                start=output.indexOf(":");
+                end=output.indexOf(";");
+                String temp=output.substring(start+1, end);
+                double liczba=ClientSide1.one_investment*ClientSide1.max_invests+Double.parseDouble(temp);
+                liczba=Math.round(liczba*1000)/1000.0;
+                jTextField2.setText(jTextField2.getText()+ Double.toString(liczba));
+                start=output.indexOf(";");
+                end=output.indexOf("#");
+                temp=output.substring(start+1, end);
+                client_count=Integer.parseInt(temp);
+                jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+"\n"
+                        + "uczestników zająłeś. Za poprawne podanie zajętego przez\n"
+                        + "Ciebie miejsca otrzymasz [5?] punktów, za każdą różnicę\n"
+                        + "miejsca -1 punkt. ");
+                jTextArea1.setVisible(true);
+                jScrollPane1.setVisible(true);
+                jComboBox1.setVisible(true);
+                jButton1.setVisible(true);
+                String item="";
+                for(int i=1; i<=10;++i)
+                {
+                    item="Pozycja "+Integer.toString(i);
+                    jComboBox1.addItem(item);
+                }
+            }
+        };
+        worker1.execute();
     }
 
     /**
@@ -38,6 +97,7 @@ public class Results_screen extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +149,7 @@ public class Results_screen extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setEditable(false);
         jTextField1.setText("Twój kapitał początkowy: ");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +157,7 @@ public class Results_screen extends javax.swing.JFrame {
             }
         });
 
+        jTextField2.setEditable(false);
         jTextField2.setText("Twój kapitał końcowy: ");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +169,12 @@ public class Results_screen extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,9 +185,17 @@ public class Results_screen extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(88, 88, 88)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -146,7 +222,9 @@ public class Results_screen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -168,7 +246,47 @@ public class Results_screen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+             int n = JOptionPane.showConfirmDialog(
+                    this,
+                    "Czy jesteś pewien, że chcesz przejść dalej?",
+                    "Potiwerdzenie",
+                    JOptionPane.YES_NO_OPTION);
+            if(n==0)
+            {
+                String sending;
+                sending=jComboBox1.getSelectedItem().toString();
+                System.out.println("sending "+sending);
+                while(!ClientSide1.send_data('@'+sending+'#'));
 
+                final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
+
+                @Override
+                protected Boolean doInBackground() throws Exception {
+
+                    String lala;
+                    lala=ClientSide1.read_data(1000);
+                    System.out.println("Received: "+lala);
+                    return true;
+                }
+
+                // Can safely update the GUI from this method.
+                @Override
+                protected void done() {
+                    ws.setVisible(false);
+                    setVisible(false);
+                    Last_screen  ls=new Last_screen(ClientSide1);
+                    ls.setLocationRelativeTo(null);
+                    ls.setVisible(true);
+                }
+                };  
+                disable();
+                ws.setLocationRelativeTo(this);
+                ws.setVisible(true);
+                worker1.execute();
+            }
+        
+        
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -179,6 +297,10 @@ public class Results_screen extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,6 +340,7 @@ public class Results_screen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

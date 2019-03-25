@@ -170,10 +170,10 @@ class clientThread extends Thread {
             }
       }
       
-      input_queue.take();
+ /*     input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
-      System.out.println(ID+": Question2 start");
+      System.out.println(ID+": Question2 start");*/
       
       while (true) 
       {
@@ -213,61 +213,129 @@ class clientThread extends Thread {
                 break;
             }
       }
+  /*    input_queue.take();
+      System.out.println(ID+": Sending data");
+      while(!write_data(os,data));*/
+      System.out.println(ID+": Question5 start");
+      
+      while (true) 
+      {
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
+            input_queue.take();
+      System.out.println(ID+": Sending data");
+      while(!write_data(os,data));
+      System.out.println(ID+": Question6 start");
+      
+      while (true) 
+      {
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
+    /*        input_queue.take();
+      System.out.println(ID+": Sending data");
+      while(!write_data(os,data));*/
+      System.out.println(ID+": Question7 start");
+      
+      while (true) 
+      {
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
       input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
-      System.out.println(ID+": Question5 start");
+      System.out.println(ID+": Question8 start");
+      while (true) 
+      {
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
+      System.out.println(ID+": Question9 start");
+      while (true) 
+      {    
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
+    //Tu client czeka na pierwsze rezultaty
+     String temp;
+     System.out.println("Czekam na wiadomosc z API");
+     while(true)
+     {
+        temp=input_queue.take();
+        System.out.println("Z API przyszło "+temp);
+        if(substract_ID(temp).equals(ID))
+        {
+            while(!write_data(os,temp));
+            break;
+        }
+         System.out.println(substract_ID(temp)+" nie pasuje do "+ID);
+        input_queue.put(temp);
+         sleep(100);
+     }
+
+      System.out.println(ID+": Question10 start");
+      while (true) 
+      {    
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
+        input_queue.take();
+        System.out.println(ID+": Sending data");
+        while(!write_data(os,data));
+        sleep(10000);
+       System.out.println("Czekam na wiadomosc z API");
+       while(true)
+       {
+          temp=input_queue.take();
+          System.out.println("Z API przyszło "+temp);
+          if(substract_ID(temp).equals(ID))
+          {
+              while(!write_data(os,temp));
+              break;
+          }
+           System.out.println(substract_ID(temp)+" nie pasuje do "+ID);
+          input_queue.put(temp);
+           sleep(100);
+       }
       
-      while (true) 
-      {
-            if(is.available()!=0)
-            {
-                System.out.println("Coś przyszło, wrzucam na kolejkę");
-                output_queue.put(ID+": "+is.readUTF());
-                break;
-            }
-      }
-            input_queue.take();
-      System.out.println(ID+": Sending data");
-      while(!write_data(os,data));
-      System.out.println(ID+": Question5 start");
-      
-      while (true) 
-      {
-            if(is.available()!=0)
-            {
-                System.out.println("Coś przyszło, wrzucam na kolejkę");
-                output_queue.put(ID+": "+is.readUTF());
-                break;
-            }
-      }
-            input_queue.take();
-      System.out.println(ID+": Sending data");
-      while(!write_data(os,data));
-      System.out.println(ID+": Question5 start");
-      
-      while (true) 
-      {
-            if(is.available()!=0)
-            {
-                System.out.println("Coś przyszło, wrzucam na kolejkę");
-                output_queue.put(ID+": "+is.readUTF());
-                break;
-            }
-      }
-      while (true) 
-      {
-            if(is.available()!=0)
-            {
-                System.out.println("Coś przyszło, wrzucam na kolejkę");
-                output_queue.put(ID+": "+is.readUTF());
-                break;
-            }
-      }
+  
       is.close();
       os.close();
       clientSocket.close();
     } catch (Exception e) {
     }
+  }
+  
+  public String substract_ID(String data)
+  {
+      int temp;
+      temp=data.indexOf(':');
+      return(data.substring(0,temp));
   }
 }

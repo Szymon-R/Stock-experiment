@@ -408,9 +408,13 @@ public class Question4 extends javax.swing.JFrame {
                         protected void done() {
                             ws.setVisible(false);
                             setVisible(false);
+
                             stock_screen ss=new stock_screen(ClientSide1);
                             ss.setLocationRelativeTo(null);
                             ss.setVisible(true);
+
+
+    
                         }
                     };
                     disable();

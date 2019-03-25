@@ -46,11 +46,12 @@ public class stock_screen extends javax.swing.JFrame {
 
     List<Quote> quotes;
     int current=0;
-    int one_investment=100000;
-    int max_invests=5;
+    double one_investment;
+    double max_invests;
     int current_invests=0;
    ClientSide ClientSide1;
    boolean stop=false;
+   boolean flag=true;
     String pytanie="Masz do wyboru 15 spółek notowanych na amerykańskiej giełdzie.\n"
             + "Dla każdej spółki przedstawione są dane historyczne notowań z ostatnich 30 dni\n"
             + "oraz wyświetlany jest bieżący kurs akcji. Twoim zadaniem jest\n"
@@ -58,11 +59,14 @@ public class stock_screen extends javax.swing.JFrame {
             + "tak by osiągnąć jak największy zysk z inwestycji.";
     public stock_screen(ClientSide ClientSide1) {
         this.ClientSide1=ClientSide1;
+        this.one_investment=ClientSide1.one_investment;
+        this.max_invests=ClientSide1.max_invests;
+     
         quotes = new ArrayList<Quote> ();
         quotes.add(new Quote("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/historical","https://www.nasdaq.com/symbol/ko/real-time"));
         quotes.add(new Quote("Google","GOOG","https://www.nasdaq.com/symbol/goog/historical","https://www.nasdaq.com/symbol/goog/real-time"));
-        quotes.add(new Quote("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/historical","https://www.nasdaq.com/symbol/aapl/real-time"));
-
+        quotes.add(new Quote("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/historical","https://www.nasdaq.com/symbol/aapl/real-time")); 
+        
         initComponents();
         jTextArea1.setText(pytanie);
         combo_box_init();
@@ -334,22 +338,26 @@ public class stock_screen extends javax.swing.JFrame {
                 if(remaining==0)
                 {
                                 
-                    String sending=",";
+                    String sending="@";
                     Quote single;
                     for(int i=0; i<quotes.size();++i)
                     {
                         single=quotes.get(i);
                         if(single.invested!=0)
                         {
-                            sending+=single.name+","+single.current_price+","+single.invested*one_investment+",;";
+                            sending+=","+single.name+","+single.current_price+","+single.invested*one_investment+",;";
                         }
                     }
+                    sending+="#";
                     while(!ClientSide1.send_data(sending));
                     stop=true;
                     t.cancel();
                     setVisible(false);
-                }
+                    Question5 qs5=new Question5(ClientSide1);
+                    qs5.setLocationRelativeTo(null);
+                    qs5.setVisible(true);
             };
+                }
         };
         t.schedule(timerTask,1000,1000);
 

@@ -9,11 +9,11 @@ import java.util.Vector;
 
 
 public class Investment {
-    private String symbol;
-    private String old_price;
-    private String new_price;
-    private String invested;
-    private String income;
+    String name;
+    String old_price;
+    String new_price;
+    String invested;
+    String income;
     
 
     public String parse_data(String data)
@@ -21,7 +21,7 @@ public class Investment {
       String[] results = data.split( ",\\s*" );
       if(results.length!=0)
       {
-          symbol=results[1];
+          name=results[1];
           old_price=results[2];
           invested=results[3];
           int position=data.indexOf(';');
@@ -36,8 +36,9 @@ public class Investment {
 
         //</editor-fold>
         Investment inv =new Investment();
+        //String data=",Coca Cola,45.93,200000,;,Google,1203.60,200000,;,Apple,191.00,100000,;";
         String data=",Coca Cola,45.93,200000,;,Google,1203.60,200000,;,Apple,191.00,100000,;";
-
+        inv.parse_data(data);
     }
 }
 

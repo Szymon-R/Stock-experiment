@@ -73,6 +73,7 @@ public class Quote {
    }
     public void get_historical_data(int records_number)
     {
+        System.out.println("Pobieranie danych historycznych");
         int data_counter=0;
         int lines_counter=1;
         int date_line_pointer=1348;
@@ -89,6 +90,11 @@ public class Quote {
             InputStreamReader inStream =new InputStreamReader(urlcon.getInputStream());
             BufferedReader buff=new BufferedReader(inStream);
             String line =buff.readLine();
+            for(int i=0; i<1100;++i)
+            {
+                ++lines_counter;
+            }
+            start_date="03/22/2019";
             while(line!=null)
             {
                 if(line.contains(start_date))
@@ -99,17 +105,15 @@ public class Quote {
                 line =buff.readLine();
                 ++lines_counter;
             }
-            //System.out.println(lines_counter);
             value_line_pointer=date_line_pointer+3;
             while(line!=null)
             {
-               // System.out.print(lines_counter+" ");
-              //  System.out.println(line);
+             //   System.out.print(lines_counter+" ");
+               // System.out.println(line);
                 
                 if(lines_counter==date_line_pointer)
                 {
                     temp_data=line;
-                //    System.out.print(temp_data);
                     if(!(line.contains("/")||line.contains(":")))
                     {
                         System.out.println("Przerywamy");
@@ -128,7 +132,7 @@ public class Quote {
                         temp_value=line;
                         temp=Double.parseDouble(temp_value);
                         quotes.add(new Single_item(temp_data,temp));
-                      //  System.out.println(quotes.get(data_counter).get_value());
+                      // System.out.println(quotes.get(data_counter).get_value());
                     }
                     catch(Exception e)
                     {
@@ -152,6 +156,7 @@ public class Quote {
     public void update_value()
     {
         int lines_counter=1;
+
         String temp_value="";
         //System.setProperty("http.agent", "Chrome");
         try
@@ -160,6 +165,10 @@ public class Quote {
             InputStreamReader inStream =new InputStreamReader(urlcon.getInputStream());
             BufferedReader buff=new BufferedReader(inStream);
             String line =buff.readLine();
+            for(int i=0; i<900;++i)
+            {
+                line =buff.readLine();
+            }
             while(line!=null)
             {
                // System.out.print(lines_counter+" ");
