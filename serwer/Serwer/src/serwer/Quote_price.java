@@ -26,7 +26,7 @@ public class Quote_price {
     String symbol;
     URL historical_url;
     URL update_url;
-    String current_price;
+    String current_price="1";
     int invested;
     public Quote_price(String name,String symbol, String update_url)
     {
@@ -62,7 +62,13 @@ public class Quote_price {
             URLConnection urlcon=update_url.openConnection();
             InputStreamReader inStream =new InputStreamReader(urlcon.getInputStream());
             BufferedReader buff=new BufferedReader(inStream);
-            String line =buff.readLine();
+            String line="";
+            for(int i=0; i<900;++i)
+            {
+                buff.readLine();
+                ++lines_counter;
+            }
+            line=buff.readLine();
             while(line!=null)
             {                
                 if(line.contains("qwidget_lastsale"))

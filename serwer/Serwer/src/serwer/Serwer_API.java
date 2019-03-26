@@ -7,8 +7,12 @@ package serwer;
 
 import static java.awt.image.ImageObserver.ERROR;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,12 +21,11 @@ import java.util.Vector;
 import java.util.concurrent.*;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Szymon
- */
+
 
 public class Serwer_API extends javax.swing.JFrame {
+
+        
     BlockingQueue<String> input_queue;
     BlockingQueue<String> output_queue;
     int step1=1;
@@ -31,12 +34,23 @@ public class Serwer_API extends javax.swing.JFrame {
     int counter=0;
     DefaultTableModel model;
     Vector<clientImage> clients=new Vector<clientImage>();
+    Vector<Section> sections=new Vector<Section>();
     Vector<Quote_price> quotes=new Vector<Quote_price>();
     public Serwer_API(BlockingQueue<String> input_queue, BlockingQueue<String> output_queue) 
     {
+
+        sections.add(new Section(0.1));
+        sections.add(new Section(0.2));
+        sections.add(new Section(0.3));
+        sections.add(new Section(0.4));
+        sections.add(new Section(0.5));
+        sections.add(new Section(5));
         this.input_queue=input_queue;
         this.output_queue=output_queue;
         initComponents();
+        try
+        {jTextField2.setText(jTextField2.getText()+InetAddress.getLocalHost().getHostAddress());}
+        catch(Exception e){};
     }
     
     public String subtract_ID(String data)
@@ -120,7 +134,7 @@ public class Serwer_API extends javax.swing.JFrame {
             }
             catch(Exception e){};
     }
-    
+
     class SortByIncome implements Comparator<clientImage> 
     { 
         public int compare(clientImage a, clientImage b) 
@@ -273,10 +287,16 @@ public class Serwer_API extends javax.swing.JFrame {
         catch(Exception e){};
 
         //musi być dodane ID
+        grade_answers();
         for(int i=0; i<client_count;++i)
         {
+            String sending="";
             try
-              {output_queue.put("1:12345");}
+              {
+                sending=(clients.get(i).ID+":");
+                sending+=Integer.toString(clients.get(i).grade1+clients.get(i).grade2);
+                output_queue.put(sending);
+              }
             catch(Exception e){};
         }
         //rozsyłanie wyników
@@ -299,23 +319,26 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             String name="Wyniki_"+formatter.format(date).toString()+".xls";
             System.out.println(name);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(name));
+             Writer out = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(name), "UTF-8"));
             System.out.println("Otwarto plik");
             for(int i=0; i<client_count;++i)
             {
-                writer.write("\n");
+                out.write("\n");
                 for(int j=0; j<clients.get(i).answers.size();++j)
                 {
                     System.out.println(clients.get(i).answers.get(j));
-                    writer.write(clients.get(i).answers.get(j));
-                    writer.write("\t");
+                    out.write(clients.get(i).answers.get(j));
+                    out.write("\t");
                 }
             }
-        writer.close();
+            out.close();
         }
-        catch(IOException e){};
+              catch(IOException e){};
+    }
+     
 
-    }    
+  
 
     public void get_prices()
     {
@@ -345,9 +368,10 @@ public class Serwer_API extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -424,14 +448,8 @@ public class Serwer_API extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Dalej");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Roześlij zysk");
+        jButton3.setText("Roześlij wynik");
+        jButton3.setActionCommand("Roześlij wyniki");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -443,6 +461,21 @@ public class Serwer_API extends javax.swing.JFrame {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.setText("IP serwera: ");
+        jTextField2.setToolTipText("");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Test");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -459,9 +492,12 @@ public class Serwer_API extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jTextField2)
+                        .addContainerGap())
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
@@ -475,11 +511,13 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(33, 33, 33)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(26, 26, 26)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
         );
 
         jButton2.getAccessibleContext().setAccessibleDescription("");
@@ -508,10 +546,6 @@ public class Serwer_API extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        step2=0;
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.out.println("Pobieranie kursów akcji");
         String temp="";
@@ -522,14 +556,16 @@ public class Serwer_API extends javax.swing.JFrame {
         }
         for(int i=0; i<clients.size();++i)
         {
-            clients.get(i).calculate_income(quotes);
-            temp+=clients.get(i).ID+":";
-            temp+=Double.toString(clients.get(i).income);
-            temp+=';';
-            temp+=Integer.toString(client_count)+'#';
-            System.out.println("Serwer api wysyła "+temp);
             try
-              {output_queue.put(temp);}
+            {
+                clients.get(i).calculate_income(quotes);
+                temp+=clients.get(i).ID+":";
+                temp+=Double.toString(clients.get(i).income);
+                temp+=';';
+                temp+=Integer.toString(client_count)+'#';
+                System.out.println("Serwer api wysyła "+temp);
+                output_queue.put(temp);
+            }
             catch(Exception e){};
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -538,6 +574,88 @@ public class Serwer_API extends javax.swing.JFrame {
         write_data();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        grade_answers();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void grade_answers()
+    {
+        try
+        {
+            double answer=0;
+            int counter;
+            int section;
+            for(int i=0; i<clients.size();++i)
+            {
+                //tu jest kwota którą ktoś wpisał
+                answer=Double.parseDouble(clients.get(i).answers.get(5));
+                
+                //do któego przedziału myśli, że się łapie
+                section=get_percentage(i);
+                if(section==0)
+                    continue;
+                
+                //do któego przedziału łapie się wpisana kwota
+                counter=0;
+                for(counter=0; counter<sections.size();++counter)
+                {
+                    if(answer>sections.get(counter).min&&answer<sections.get(counter).max)
+                        break;
+                }
+                if(Math.abs(section-counter)<1)
+                    clients.get(i).grade1=2;
+                else if(Math.abs(section-counter)<2)
+                    clients.get(i).grade1=1;
+                else
+                    clients.get(i).grade1=0;
+            }
+            //Druga część oceniania
+            SortByIncome sorting = new SortByIncome();
+            Collections.sort(clients, sorting);
+            int position;
+            int reality;
+            int difference;
+            for(int i=0; i<clients.size();++i)
+            {
+                position=Integer.parseInt(clients.get(i).answers.get(9));
+                reality=i+1;
+                difference=Math.abs(position-reality);
+                for(int j=0; j<5;++j)
+                {
+                    if(difference==j)
+                    {
+                       clients.get(i).grade2=(5-j);
+                       break;
+                    }
+                }
+            }
+        }
+        catch (Exception e){};
+    }
+    
+
+    public int get_percentage(int which)
+    {
+        String answer=clients.get(which).answers.get(6);
+        if(answer.equals("[0-10%]"))
+            return 0;
+        else if(answer.equals("[11-20%]"))
+            return 1;
+        else if(answer.equals("[21-30%]"))
+            return 2;
+        else if(answer.equals("[31-40%]"))
+            return 3;
+        else if(answer.equals("[41-50%]"))
+            return 4;
+        else if(answer.equals("[[powyżej 50%]]"))
+            return 5;
+        else
+            return 0;
+    }
 
 
 
@@ -553,5 +671,6 @@ public class Serwer_API extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

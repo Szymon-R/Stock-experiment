@@ -69,7 +69,7 @@ public class Results_screen extends javax.swing.JFrame {
                 String item="";
                 for(int i=1; i<=10;++i)
                 {
-                    item="Pozycja "+Integer.toString(i);
+                    item=Integer.toString(i);
                     jComboBox1.addItem(item);
                 }
             }

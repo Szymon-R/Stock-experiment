@@ -1,2 +1,0 @@
-serwer.Serwer
-serwer.clientThread
