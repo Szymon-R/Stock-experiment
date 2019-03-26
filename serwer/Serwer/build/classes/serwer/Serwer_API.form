@@ -199,9 +199,9 @@
                       <Component id="jTextField1" min="-2" pref="61" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButton2" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                       <Component id="jButton3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                       <Component id="jButton4" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace pref="132" max="32767" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="39" max="-2" attributes="0"/>
@@ -258,7 +258,8 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Roze&#x15b;lij punkty"/>
+                <Property name="text" type="java.lang.String" value="Zapisz dane"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>

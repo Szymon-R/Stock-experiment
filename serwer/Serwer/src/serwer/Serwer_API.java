@@ -6,8 +6,13 @@
 package serwer;
 
 import static java.awt.image.ImageObserver.ERROR;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Vector;
 import java.util.concurrent.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +27,7 @@ public class Serwer_API extends javax.swing.JFrame {
     BlockingQueue<String> output_queue;
     int step1=1;
     int step2=1;
-    int client_count=0;
+    public int client_count=0;
     int counter=0;
     DefaultTableModel model;
     Vector<clientImage> clients=new Vector<clientImage>();
@@ -96,6 +101,7 @@ public class Serwer_API extends javax.swing.JFrame {
                     else
                     {
                       System.out.println("Wrzucanie do tablicy");
+                      System.out.println("To trafia do listy odpowiedzi: "+get_answer(temp));
                       clients.get(position-1).answers.add(get_answer(temp));
                       if(column==9)
                       {
@@ -283,7 +289,33 @@ public class Serwer_API extends javax.swing.JFrame {
 
         
     }
-        
+    public void write_data()
+    {
+        System.out.println("Zapisywanie do pliku");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd;MM;yyyy__HH.mm.ss");  
+        Date date = new Date();  
+        System.out.println();  
+        try
+        {
+            String name="Wyniki_"+formatter.format(date).toString()+".xls";
+            System.out.println(name);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(name));
+            System.out.println("Otwarto plik");
+            for(int i=0; i<client_count;++i)
+            {
+                writer.write("\n");
+                for(int j=0; j<clients.get(i).answers.size();++j)
+                {
+                    System.out.println(clients.get(i).answers.get(j));
+                    writer.write(clients.get(i).answers.get(j));
+                    writer.write("\t");
+                }
+            }
+        writer.close();
+        }
+        catch(IOException e){};
+
+    }    
 
     public void get_prices()
     {
@@ -406,7 +438,8 @@ public class Serwer_API extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Roześlij punkty");
+        jButton4.setText("Zapisz dane");
+        jButton4.setToolTipText("");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -440,9 +473,9 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132)
+                .addGap(68, 68, 68)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(71, 71, 71)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -502,7 +535,7 @@ public class Serwer_API extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        write_data();
     }//GEN-LAST:event_jButton4ActionPerformed
 
 

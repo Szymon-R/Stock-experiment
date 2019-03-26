@@ -38,7 +38,7 @@ public class download_screen extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 3, 20)); // NOI18N
         jLabel5.setText("         Pobieranie danych giełdowych");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("D:\\Projekty\\Oli magisterka\\klient\\JavaApplication3\\src\\javaapplication3\\wilk.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/wilk.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -114,14 +114,8 @@ public class download_screen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

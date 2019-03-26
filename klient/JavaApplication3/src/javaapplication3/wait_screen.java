@@ -43,7 +43,7 @@ public class wait_screen extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 3, 20)); // NOI18N
         jLabel2.setText("Oczekiwanie na pozostałych uczestników");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Projekty\\Oli magisterka\\klient\\JavaApplication3\\src\\javaapplication3\\wait.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/wait.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
