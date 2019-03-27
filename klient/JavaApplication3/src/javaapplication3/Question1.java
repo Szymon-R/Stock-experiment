@@ -5,6 +5,9 @@
  */
 package javaapplication3;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -245,14 +248,25 @@ public class Question1 extends javax.swing.JFrame {
                 // Can safely update the GUI from this method.
                 @Override
                 protected void done() {
-                    ws.setVisible(false);
-                    setVisible(false);
+                    ws.dispose();
+                    dispose();
                     Question2 q2=new Question2(ClientSide1);
+                    q2.addWindowListener(new WindowAdapter() 
+                    {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(q2,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        q2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        q2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                    });
                     q2.setLocationRelativeTo(null);
                     q2.setVisible(true);
                 }
                 };  
-                disable();
+                this.setEnabled(false);
                 ws.setLocationRelativeTo(this);
                 ws.setVisible(true);
                 worker1.execute();

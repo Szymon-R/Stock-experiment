@@ -5,6 +5,9 @@
  */
 package javaapplication3;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -14,9 +17,11 @@ import javax.swing.SwingWorker;
  */
 public class Question2 extends javax.swing.JFrame {
 
-   String pytanie="Czy uważasz, że gdybyś zainwestował w Bitcoina w czasie jego silnego wzrostu wartości,"
-           + "\nto zdążyłbyś się wycofać przed gwałtownym spadkiem wartości,"
-           + "\nczy straciłbyś większość pieniędzy?";
+   String pytanie="Czy uważasz, że gdybyś zainwestował w Bitcoina\n"
+           + "w czasie jego silnego wzrostu wartości, to\n"
+           + "zdążyłbyś się wycofać przed gwałtownym\n"
+           + "spadkiem wartości, czy straciłbyś\n"
+           + "większość pieniędzy?";
     String odp1="Zdążyłbym się wycofać";
     String odp2="Straciłbym większość";
 
@@ -156,16 +161,14 @@ public class Question2 extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 178, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
+                        .addGap(0, 182, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(jScrollPane1)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,14 +249,25 @@ public class Question2 extends javax.swing.JFrame {
                 // Can safely update the GUI from this method.
                 @Override
                 protected void done() {
-                    ws.setVisible(false);
-                    setVisible(false);
+                    ws.dispose();
+                    dispose();
                     Question3 q3=new Question3(ClientSide1);
+                    q3.addWindowListener(new WindowAdapter() 
+                    {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(q3,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        q3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        q3.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                    });
                     q3.setLocationRelativeTo(null);
                     q3.setVisible(true);
                 }
                 };  
-                
+                this.setEnabled(false);
                 ws.setLocationRelativeTo(this);
                 ws.setVisible(true);
                 worker1.execute();

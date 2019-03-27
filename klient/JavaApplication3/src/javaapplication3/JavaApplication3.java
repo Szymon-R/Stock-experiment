@@ -5,6 +5,11 @@
  */
 package javaapplication3;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Szymon
@@ -42,6 +47,17 @@ public class JavaApplication3 {
                 IP_Screen ip=new IP_Screen();
                 ip.setLocationRelativeTo(null);
                 ip.setVisible(true);
+                ip.addWindowListener(new WindowAdapter() 
+                {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(ip,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        ip.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        ip.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                });
             }
         });
     }

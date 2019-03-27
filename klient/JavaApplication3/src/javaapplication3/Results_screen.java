@@ -5,7 +5,10 @@
  */
 package javaapplication3;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -58,16 +61,16 @@ public class Results_screen extends javax.swing.JFrame {
                 end=output.indexOf("#");
                 temp=output.substring(start+1, end);
                 client_count=Integer.parseInt(temp);
-                jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+"\n"
-                        + "uczestników zająłeś. Za poprawne podanie zajętego przez\n"
-                        + "Ciebie miejsca otrzymasz [5?] punktów, za każdą różnicę\n"
-                        + "miejsca -1 punkt. ");
+                jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+" uczestników\n"
+                        + "zająłeś. Za poprawne podanie zajętego przez\n"
+                        + "Ciebie miejsca otrzymasz 5 punktów, za każdą\n"
+                        + "różnicę miejsca -1 punkt.");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);
                 jComboBox1.setVisible(true);
                 jButton1.setVisible(true);
                 String item="";
-                for(int i=1; i<=10;++i)
+                for(int i=1; i<=client_count;++i)
                 {
                     item=Integer.toString(i);
                     jComboBox1.addItem(item);
@@ -166,6 +169,7 @@ public class Results_screen extends javax.swing.JFrame {
         });
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -272,14 +276,25 @@ public class Results_screen extends javax.swing.JFrame {
                 // Can safely update the GUI from this method.
                 @Override
                 protected void done() {
-                    ws.setVisible(false);
-                    setVisible(false);
+                    ws.dispose();
+                    dispose();
                     Last_screen  ls=new Last_screen(ClientSide1);
+                    ls.addWindowListener(new WindowAdapter() 
+                    {
+                        public void windowClosing(WindowEvent we) 
+                        {
+                        int result = JOptionPane.showConfirmDialog(ls,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                        if(result == JOptionPane.YES_OPTION)
+                            ls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        else if(result == JOptionPane.NO_OPTION)
+                            ls.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                        }
+                    });
                     ls.setLocationRelativeTo(null);
                     ls.setVisible(true);
                 }
                 };  
-                disable();
+                this.setEnabled(false);
                 ws.setLocationRelativeTo(this);
                 ws.setVisible(true);
                 worker1.execute();

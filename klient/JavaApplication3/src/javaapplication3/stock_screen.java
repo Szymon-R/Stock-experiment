@@ -52,11 +52,13 @@ public class stock_screen extends javax.swing.JFrame {
    ClientSide ClientSide1;
    boolean stop=false;
    boolean flag=true;
-    String pytanie="Masz do wyboru 15 spółek notowanych na amerykańskiej giełdzie.\n"
-            + "Dla każdej spółki przedstawione są dane historyczne notowań z ostatnich 30 dni\n"
-            + "oraz wyświetlany jest bieżący kurs akcji. Twoim zadaniem jest\n"
-            + "zainwestowanie 100 000zł w jedną, wybraną spółkę,\n"
-            + "tak by osiągnąć jak największy zysk z inwestycji.";
+    String pytanie="Masz do wyboru 15 spółek notowanych na\n"
+            + "amerykańskiej giełdzie. Dla każdej spółki\n"
+            + "przedstawione są dane historyczne notowań\n"
+            + "z ostatnich 30 dni oraz wyświetlany jest bieżący\n"
+            + "kurs akcji. Twoim zadaniem jest zainwestowanie\n"
+            + "100 000zł w jedną, wybraną spółkę, tak by\n"
+            + "osiągnąć jak największy zysk z inwestycji.";
     public stock_screen(ClientSide ClientSide1) {
         this.ClientSide1=ClientSide1;
         this.one_investment=ClientSide1.one_investment;
@@ -123,13 +125,13 @@ public class stock_screen extends javax.swing.JFrame {
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextArea1.setRows(5);
         jTextArea1.setText("Tłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia");
         jScrollPane1.setViewportView(jTextArea1);
 
         jTextField1.setEditable(false);
-        jTextField1.setText("jTextField1");
+        jTextField1.setText("0");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -198,20 +200,19 @@ public class stock_screen extends javax.swing.JFrame {
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(57, 57, 57)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -229,7 +230,7 @@ public class stock_screen extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

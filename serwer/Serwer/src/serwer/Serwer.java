@@ -1,5 +1,7 @@
 package serwer;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PrintStream;
@@ -10,6 +12,8 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.nio.charset.Charset;
 import java.util.concurrent.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /*
  * A chat server that delivers public and private messages.
  */
@@ -31,6 +35,19 @@ public class Serwer {
     
     System.out.println("Starting Server API");
     Serwer_API SA1=new Serwer_API(MISO,MOSI);
+    
+    SA1.addWindowListener(new WindowAdapter() 
+    {
+        public void windowClosing(WindowEvent we) 
+        {
+            int result = JOptionPane.showConfirmDialog(SA1,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.YES_OPTION)
+                SA1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            else if(result == JOptionPane.NO_OPTION)
+                SA1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    });
+    
     java.awt.EventQueue.invokeLater(new Runnable() {
     public void run() 
     {

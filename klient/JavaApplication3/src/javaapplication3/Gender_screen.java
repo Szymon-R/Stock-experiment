@@ -5,6 +5,9 @@
  */
 package javaapplication3;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -190,7 +193,18 @@ public class Gender_screen extends javax.swing.JFrame {
 
                 
                 Stock_question sq= new Stock_question(text,ClientSide1);
-                setVisible(false);
+                sq.addWindowListener(new WindowAdapter() 
+                {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(sq,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        sq.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                });
+                dispose();
                 sq.setLocationRelativeTo(null);
                 sq.setVisible(true);
             }

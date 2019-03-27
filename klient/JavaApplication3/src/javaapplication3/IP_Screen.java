@@ -5,9 +5,12 @@
  */
 package javaapplication3;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import javax.swing.Icon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -213,14 +216,25 @@ public class IP_Screen extends javax.swing.JFrame {
         // Can safely update the GUI from this method.
         @Override
         protected void done() {
-            ws.setVisible(false);
-            setVisible(false);
+            ws.dispose();
+            dispose();
             Gender_screen gs=new Gender_screen(ClientSide1);
+                gs.addWindowListener(new WindowAdapter() 
+                {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(gs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        gs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                });
             gs.setLocationRelativeTo(null);
             gs.setVisible(true);
         }
         };  
-        disable();
+        this.setEnabled(false);
         ws.setVisible(true);
         ws.setLocationRelativeTo(this);
         worker1.execute();

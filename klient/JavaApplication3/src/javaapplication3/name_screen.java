@@ -175,8 +175,8 @@ public class name_screen extends javax.swing.JFrame {
         {
             IP_Screen1=new IP_Screen();
             IP_Screen1.setLocationRelativeTo(null);
-            IP_Screen1.show();
-            this.hide();
+            IP_Screen1.setVisible(true);
+            this.setEnabled(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
