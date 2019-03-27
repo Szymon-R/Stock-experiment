@@ -71,8 +71,17 @@ public class clientImage {
                     this.income+=(result+rand.nextInt(50)); 
                 }
             }
+        } 
+    }
+    public void insert_answers(String data)
+    {
+        int drugi;
+        for(int i=0; i<11;++i)
+        {
+            drugi=data.indexOf(";");
+            answers.add(data.substring(0, drugi));  
+            data=data.substring(drugi+1,data.length());
         }
-        
-        
+
     }
 }

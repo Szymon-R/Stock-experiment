@@ -579,6 +579,31 @@ public class Serwer_API extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String data="Kobieta;Tak;Zdążyłbym się wycofać;5000;Więcej;2800;[0-10%];,Coca Cola,46.75,200000.0,;,Google,1185.05,100000.0,;100;1;";
+        clients.add(new clientImage());
+        clients.lastElement().insert_answers(data);
+        
+        data="Kobieta;Tak;Zdążyłbym się wycofać;5000;Więcej;3000;[0-10%];,Coca Cola,46.75,200000.0,;,Google,1185.05,100000.0,;100;3;";
+        clients.add(new clientImage());
+        clients.lastElement().insert_answers(data);
+        
+        data="Kobieta;Tak;Zdążyłbym się wycofać;5000;Więcej;9000;[0-10%];,Coca Cola,46.75,200000.0,;,Google,1185.05,100000.0,;100;2;";
+        clients.add(new clientImage());
+        clients.lastElement().insert_answers(data);
+        
+        data="Kobieta;Tak;Zdążyłbym się wycofać;5000;Więcej;3300;[0-10%];,Coca Cola,46.75,200000.0,;,Google,1185.05,100000.0,;100;3;";
+        clients.add(new clientImage());
+        clients.lastElement().insert_answers(data);
+        
+        data="Kobieta;Tak;Zdążyłbym się wycofać;5000;Więcej;3300;[0-10%];,Coca Cola,46.75,200000.0,;,Google,1185.05,100000.0,;100;2;";
+        clients.add(new clientImage());
+        clients.lastElement().insert_answers(data);
+        
+        data="Kobieta;Tak;Zdążyłbym się wycofać;5000;Więcej;3300;[0-10%];,Coca Cola,46.75,200000.0,;,Google,1185.05,100000.0,;100;1;";
+        clients.add(new clientImage());
+        clients.lastElement().insert_answers(data);
+        
+        client_count=6;
         grade_answers();
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -589,15 +614,13 @@ public class Serwer_API extends javax.swing.JFrame {
             double answer=0;
             int counter;
             int section;
-            for(int i=0; i<clients.size();++i)
+        /*    for(int i=0; i<clients.size();++i)
             {
                 //tu jest kwota którą ktoś wpisał
                 answer=Double.parseDouble(clients.get(i).answers.get(5));
                 
                 //do któego przedziału myśli, że się łapie
                 section=get_percentage(i);
-                if(section==0)
-                    continue;
                 
                 //do któego przedziału łapie się wpisana kwota
                 counter=0;
@@ -612,16 +635,21 @@ public class Serwer_API extends javax.swing.JFrame {
                     clients.get(i).grade1=1;
                 else
                     clients.get(i).grade1=0;
-            }
+                
+                
+                //Do usunięcia
+                clients.get(i).answers.add(Integer.toString(clients.get(i).grade1));
+            }*/
             //Druga część oceniania
             SortByIncome sorting = new SortByIncome();
-            Collections.sort(clients, sorting);
+            //Collections.sort(clients, sorting);
             int position;
             int reality;
             int difference;
             for(int i=0; i<clients.size();++i)
             {
-                position=Integer.parseInt(clients.get(i).answers.get(9));
+               // position=Integer.parseInt(clients.get(i).answers.get(9));
+                 position=Integer.parseInt(clients.get(i).answers.get(10));
                 reality=i+1;
                 difference=Math.abs(position-reality);
                 for(int j=0; j<5;++j)
@@ -632,6 +660,7 @@ public class Serwer_API extends javax.swing.JFrame {
                        break;
                     }
                 }
+            clients.get(i).answers.add(Integer.toString(clients.get(i).grade2));
             }
         }
         catch (Exception e){};
