@@ -301,15 +301,14 @@ public class Question3 extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
-                System.out.println("sending "+jTextField1.getText());
-                while(!ClientSide1.send_data('@'+jTextField1.getText()+'#'));
+   
                 String text="";
                 if(jCheckBox3.isSelected())
                     text=jCheckBox3.getText();
                 if(jCheckBox2.isSelected())
                     text=jCheckBox2.getText();
-                System.out.println("sending "+text);
-                while(!ClientSide1.send_data('@'+text+'#'));
+                System.out.println("sending "+'@'+jTextField1.getText()+'#'+'@'+text+'#');
+                while(!ClientSide1.send_data('@'+jTextField1.getText()+'#'+'@'+text+'#'));
                  
                 final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
 

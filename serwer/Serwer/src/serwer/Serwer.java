@@ -151,6 +151,7 @@ class clientThread extends Thread {
         return false;
       }
   }
+ 
   public void run()  {
     System.out.println("Rozpoczynanie wątku");
     int maxClientsCount = this.maxClientsCount;
@@ -187,12 +188,8 @@ class clientThread extends Thread {
             }
       }
       
- /*     input_queue.take();
-      System.out.println(ID+": Sending data");
-      while(!write_data(os,data));
-      System.out.println(ID+": Question2 start");*/
       
-      while (true) 
+   /*   while (true) 
       {
             if(is.available()!=0)
             {
@@ -200,7 +197,7 @@ class clientThread extends Thread {
                 output_queue.put(ID+": "+is.readUTF());
                 break;
             }
-      }
+      }*/
       
       input_queue.take();
       System.out.println(ID+": Sending data");
@@ -230,12 +227,10 @@ class clientThread extends Thread {
                 break;
             }
       }
-  /*    input_queue.take();
-      System.out.println(ID+": Sending data");
-      while(!write_data(os,data));*/
+
       System.out.println(ID+": Question5 start");
       
-      while (true) 
+/*      while (true) 
       {
             if(is.available()!=0)
             {
@@ -243,8 +238,8 @@ class clientThread extends Thread {
                 output_queue.put(ID+": "+is.readUTF());
                 break;
             }
-      }
-            input_queue.take();
+      }*/
+      input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
       System.out.println(ID+": Question6 start");
@@ -258,10 +253,7 @@ class clientThread extends Thread {
                 break;
             }
       }
-    /*        input_queue.take();
-      System.out.println(ID+": Sending data");
-      while(!write_data(os,data));*/
-      System.out.println(ID+": Question7 start");
+   /*   System.out.println(ID+": Question7 start");
       
       while (true) 
       {
@@ -271,7 +263,7 @@ class clientThread extends Thread {
                 output_queue.put(ID+": "+is.readUTF());
                 break;
             }
-      }
+      }*/
       input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
@@ -286,7 +278,7 @@ class clientThread extends Thread {
             }
       }
       System.out.println(ID+": Question9 start");
-      while (true) 
+ /*     while (true) 
       {    
             if(is.available()!=0)
             {
@@ -294,7 +286,7 @@ class clientThread extends Thread {
                 output_queue.put(ID+": "+is.readUTF());
                 break;
             }
-      }
+      }*/
     //Tu client czeka na pierwsze rezultaty
      String temp;
      System.out.println("Czekam na wiadomosc z API");

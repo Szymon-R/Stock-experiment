@@ -44,7 +44,7 @@ public class Serwer_API extends javax.swing.JFrame {
         sections.add(new Section(0.3));
         sections.add(new Section(0.4));
         sections.add(new Section(0.5));
-        sections.add(new Section(5));
+        sections.add(new Section(50));
         this.input_queue=input_queue;
         this.output_queue=output_queue;
         initComponents();
@@ -134,6 +134,58 @@ public class Serwer_API extends javax.swing.JFrame {
             }
             catch(Exception e){};
     }
+ public void process_answer(int column1,int column2)
+    {
+        String temp;
+        
+        int row;
+        int position;
+            try
+            {
+                if(!input_queue.isEmpty())
+                {
+                    System.out.println("Coś jest w kolejce");
+                    temp=input_queue.take();
+                    System.out.println("pobrane z kolejki: "+temp);
+                    row=find_row(subtract_ID(temp));
+                    position=find_client(subtract_ID(temp));
+                    System.out.println(get_answer(temp));
+                    System.out.println("row: "+row);
+                    System.out.println("position: "+position);
+                    if(row==0||position==0)
+                        System.out.println("Nie znaleziono ID");
+                    else
+                    {
+                      if(column1==9)
+                      {
+                          clients.get(position-1).read_investments(get_answer(temp));
+                      }
+                      System.out.println("Wrzucanie do tablicy");
+                      System.out.println("To trafia do listy odpowiedzi: "+get_answer(temp));
+                      clients.get(position-1).answers.add(get_answer(temp));
+                      model.setValueAt(get_answer(temp), row-1, column1);
+                      
+                      if(column2==9)
+                      {
+                          clients.get(position-1).read_investments(get_answer(temp));
+                      }
+                      temp=truncate_string(temp);
+                      System.out.println("Wrzucanie do tablicy");
+                      System.out.println("To trafia do listy odpowiedzi: "+get_answer(temp));
+                      clients.get(position-1).answers.add(get_answer(temp));
+                      model.setValueAt(get_answer(temp), row-1, column2);
+                      ++counter;
+                      if(counter==client_count)
+                      {
+                          counter=0;
+                          step2=0;
+                      }     
+                    }
+                }
+                Thread.sleep(100);
+            }
+            catch(Exception e){};
+    }
 
     class SortByIncome implements Comparator<clientImage> 
     { 
@@ -143,7 +195,7 @@ public class Serwer_API extends javax.swing.JFrame {
         } 
     } 
 
-    public void get_client_info()
+ public void get_client_info()
     {
 
       Thread thread = new Thread()
@@ -181,21 +233,10 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
-        while(step2==1)
-        {
-            process_answer(2);
-        }
-        
-   /*     for(int i=0; i<client_count;++i)
-        {
-            try
-              {output_queue.put("GOGO");}
-            catch(Exception e){};
-        }*/
         step2=1;
         while(step2==1)
         {
-            process_answer(3);
+            process_answer(2,3);
         }
         
         for(int i=0; i<client_count;++i)
@@ -219,18 +260,7 @@ public class Serwer_API extends javax.swing.JFrame {
         step2=1;
         while(step2==1)
         {
-            process_answer(5);
-        }
-       /*         for(int i=0; i<client_count;++i)
-        {
-            try
-              {output_queue.put("GOGO");}
-            catch(Exception e){};
-        }*/
-        step2=1;
-        while(step2==1)
-        {
-            process_answer(6);
+            process_answer(5,6);
         }
         for(int i=0; i<client_count;++i)
         {
@@ -241,18 +271,7 @@ public class Serwer_API extends javax.swing.JFrame {
         step2=1;
         while(step2==1)
         {
-            process_answer(7);
-        }
-      /*  for(int i=0; i<client_count;++i)
-        {
-            try
-              {output_queue.put("GOGO");}
-            catch(Exception e){};
-        }*/
-        step2=1;
-        while(step2==1)
-        {
-            process_answer(8);
+            process_answer(7,8);
         }
         for(int i=0; i<client_count;++i)
         {
@@ -263,12 +282,7 @@ public class Serwer_API extends javax.swing.JFrame {
         step2=1;
         while(step2==1)
         {
-            process_answer(9);
-        }
-        step2=1;
-        while(step2==1)
-        {
-            process_answer(10);
+            process_answer(9,10);
         }
         step2=1;
         while(step2==1)
@@ -308,6 +322,13 @@ public class Serwer_API extends javax.swing.JFrame {
     thread.start();
 
         
+    }
+
+    public String truncate_string(String data)
+    {
+        int index2;
+        index2=data.indexOf('#');
+        return(data.substring(index2+1,data.length()));
     }
     public void write_data()
     {
@@ -548,7 +569,7 @@ public class Serwer_API extends javax.swing.JFrame {
             try
             {
                 clients.get(i).calculate_income(quotes);
-                temp+=clients.get(i).ID+":";
+                temp=clients.get(i).ID+":";
                 temp+=Double.toString(clients.get(i).income);
                 temp+=';';
                 temp+=Integer.toString(client_count)+'#';
@@ -583,7 +604,7 @@ public class Serwer_API extends javax.swing.JFrame {
                 section=get_percentage(i);
                 if(section==0)
                     continue;
-                
+                section-=1;
                 //do któego przedziału łapie się wpisana kwota
                 counter=0;
                 for(counter=0; counter<sections.size();++counter)
@@ -627,17 +648,17 @@ public class Serwer_API extends javax.swing.JFrame {
     {
         String answer=clients.get(which).answers.get(6);
         if(answer.equals("[0-10%]"))
-            return 0;
-        else if(answer.equals("[11-20%]"))
             return 1;
-        else if(answer.equals("[21-30%]"))
+        else if(answer.equals("[11-20%]"))
             return 2;
-        else if(answer.equals("[31-40%]"))
+        else if(answer.equals("[21-30%]"))
             return 3;
-        else if(answer.equals("[41-50%]"))
+        else if(answer.equals("[31-40%]"))
             return 4;
-        else if(answer.equals("[[powyżej 50%]]"))
+        else if(answer.equals("[41-50%]"))
             return 5;
+        else if(answer.equals("[[powyżej 50%]]"))
+            return 6;
         else
             return 0;
     }

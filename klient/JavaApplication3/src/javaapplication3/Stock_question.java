@@ -208,13 +208,10 @@ public class Stock_question extends javax.swing.JFrame {
                 text=jCheckBox2.getText();
                 
                 
-                
-                System.out.println("sending "+answer);
 
-                while(!ClientSide1.send_data('@'+answer+'#'));
-                System.out.println("sending "+text);
+                System.out.println("sending "+'@'+answer+'#'+'@'+text+'#');
 
-                while(!ClientSide1.send_data('@'+text+'#'));
+                while(!ClientSide1.send_data('@'+answer+'#'+'@'+text+'#'));
                 final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
                     
 

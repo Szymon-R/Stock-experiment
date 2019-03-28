@@ -18,7 +18,9 @@ public class Question5 extends javax.swing.JFrame {
        wait_screen ws=new wait_screen();
     String pytanie="Oszacuj jaki będzie Twój zysk z tej inwestycji";
     ClientSide ClientSide1;
-    public Question5(ClientSide ClientSide1) {
+    String previous;
+    public Question5(ClientSide ClientSide1,String previous) {
+        this.previous=previous;
         this.ClientSide1=ClientSide1;
         initComponents();
         jLabel1.setText(pytanie);
@@ -183,8 +185,8 @@ public class Question5 extends javax.swing.JFrame {
             if(n==0)
             {
                 String text=jTextField1.getText();
-                System.out.println("sending "+text);
-                while(!ClientSide1.send_data('@'+text+'#'));
+                System.out.println("sending "+previous+'@'+text+'#');
+                while(!ClientSide1.send_data(previous+'@'+text+'#'));
                 jTextField1.setEnabled(false);
                 ws.dispose();
                 dispose();
@@ -243,7 +245,7 @@ public class Question5 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ClientSide cs=new ClientSide();
-                new Question5(cs).setVisible(true);
+                new Question5(cs,"fdg").setVisible(true);
             }
         });
     }

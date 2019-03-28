@@ -350,11 +350,10 @@ public class stock_screen extends javax.swing.JFrame {
                         }
                     }
                     sending+="#";
-                    while(!ClientSide1.send_data(sending));
                     stop=true;
                     t.cancel();
                     setVisible(false);
-                    Question5 qs5=new Question5(ClientSide1);
+                    Question5 qs5=new Question5(ClientSide1,sending);
                     qs5.setLocationRelativeTo(null);
                     qs5.setVisible(true);
             };
