@@ -29,7 +29,7 @@ public class ClientSide
     InputStream inFromServer;
     DataInputStream in;
     double one_investment=100000;
-    double max_invests=5;
+    double max_invests=10;
     public int findAvaliable(String name,int first, int last)
     {
         for(int i=first; i<=last;++i)

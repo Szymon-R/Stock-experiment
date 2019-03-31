@@ -28,7 +28,7 @@ public class Quote_price {
     URL update_url;
     String current_price="1";
     int invested;
-    public Quote_price(String name,String symbol, String update_url)
+    public Quote_price(String name,String symbol,String historical_url, String update_url)
     {
         this.name=name;
         this.symbol=symbol;

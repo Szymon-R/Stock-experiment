@@ -282,7 +282,18 @@ public class Serwer_API extends javax.swing.JFrame {
         step2=1;
         while(step2==1)
         {
-            process_answer(9,10);
+            process_answer(9);
+        }
+        for(int i=0; i<client_count;++i)
+        {
+            try
+              {output_queue.put("GOGO");}
+            catch(Exception e){};
+        }
+        step2=1;
+        while(step2==1)
+        {
+            process_answer(10);
         }
         step2=1;
         while(step2==1)
@@ -363,9 +374,22 @@ public class Serwer_API extends javax.swing.JFrame {
 
     public void get_prices()
     {
-        quotes.add(new Quote_price("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/real-time"));
-        quotes.add(new Quote_price("Google","GOOG","https://www.nasdaq.com/symbol/goog/real-time"));
-        quotes.add(new Quote_price("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/real-time"));
+
+        quotes.add(new Quote_price("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/historical","https://www.nasdaq.com/symbol/ko/real-time"));
+        quotes.add(new Quote_price("Google","GOOG","https://www.nasdaq.com/symbol/goog/historical","https://www.nasdaq.com/symbol/goog/real-time"));
+        quotes.add(new Quote_price("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/historical","https://www.nasdaq.com/symbol/aapl/real-time")); 
+        quotes.add(new Quote_price("Facebook","FB","https://www.nasdaq.com/symbol/fb/historical","https://www.nasdaq.com/symbol/fb/real-time"));
+        quotes.add(new Quote_price("Tesla","TSLA","https://www.nasdaq.com/symbol/TSLA/historical","https://www.nasdaq.com/symbol/TSLA/real-time"));
+        quotes.add(new Quote_price("Amazon","AMZN","https://www.nasdaq.com/symbol/AMZN/historical","https://www.nasdaq.com/symbol/AMZN/real-time"));
+        quotes.add(new Quote_price("Microsoft","MSFT","https://www.nasdaq.com/symbol/MSFT/historical","https://www.nasdaq.com/symbol/MSFT/real-time"));
+        quotes.add(new Quote_price("Intel","INTC","https://www.nasdaq.com/symbol/INTC/historical","https://www.nasdaq.com/symbol/INTC/real-time"));
+        quotes.add(new Quote_price("Groupon","GRPN","https://www.nasdaq.com/symbol/GRPN/historical","https://www.nasdaq.com/symbol/GRPN/real-time"));
+        quotes.add(new Quote_price("EBay","EBAY","https://www.nasdaq.com/symbol/EBAY/historical","https://www.nasdaq.com/symbol/EBAY/real-time"));
+        quotes.add(new Quote_price("Starbucks","SBUX","https://www.nasdaq.com/symbol/SBUX/historical","https://www.nasdaq.com/symbol/SBUX/real-time"));
+        quotes.add(new Quote_price("GoPro","GRPRO","https://www.nasdaq.com/symbol/GPRO/historical","https://www.nasdaq.com/symbol/GPRO/real-time"));
+        quotes.add(new Quote_price("SunPower","SPWR","https://www.nasdaq.com/symbol/SPWR/historical","https://www.nasdaq.com/symbol/SPWR/real-time"));
+        quotes.add(new Quote_price("General Motors","GM","https://www.nasdaq.com/symbol/gm/historical","https://www.nasdaq.com/symbol/gm/real-time"));
+        quotes.add(new Quote_price("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
         for(int i=0; i<quotes.size();++i)
         {
             System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
@@ -505,12 +529,10 @@ public class Serwer_API extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField2)
-                        .addContainerGap())
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(jTextField2)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,11 +543,11 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
+                .addGap(72, 72, 72)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
         );
@@ -563,12 +585,16 @@ public class Serwer_API extends javax.swing.JFrame {
         for(int i=0; i<clients.size();++i)
         {
             clients.get(i).calculate_income(quotes);
+            for(int j=0; j<clients.get(i).invest.size();++j)
+            {
+                clients.get(i).income+=Double.parseDouble(clients.get(i).invest.get(j).income);
+            }
+                    
         }
         for(int i=0; i<clients.size();++i)
         {
             try
             {
-                clients.get(i).calculate_income(quotes);
                 temp=clients.get(i).ID+":";
                 temp+=Double.toString(clients.get(i).income);
                 temp+=';';
@@ -635,6 +661,11 @@ public class Serwer_API extends javax.swing.JFrame {
                     if(difference==j)
                     {
                        clients.get(i).grade2=(5-j);
+                       if((clients.get(i).grade2+clients.get(i).grade1)<2)
+                       {
+                           clients.get(i).grade2=1;
+                           clients.get(i).grade1=1;
+                       }
                        break;
                     }
                 }

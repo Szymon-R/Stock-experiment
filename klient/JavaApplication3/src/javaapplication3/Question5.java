@@ -18,9 +18,7 @@ public class Question5 extends javax.swing.JFrame {
        wait_screen ws=new wait_screen();
     String pytanie="Oszacuj jaki będzie Twój zysk z tej inwestycji";
     ClientSide ClientSide1;
-    String previous;
-    public Question5(ClientSide ClientSide1,String previous) {
-        this.previous=previous;
+    public Question5(ClientSide ClientSide1) {
         this.ClientSide1=ClientSide1;
         initComponents();
         jLabel1.setText(pytanie);
@@ -45,6 +43,7 @@ public class Question5 extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(609, 526));
@@ -185,8 +184,8 @@ public class Question5 extends javax.swing.JFrame {
             if(n==0)
             {
                 String text=jTextField1.getText();
-                System.out.println("sending "+previous+'@'+text+'#');
-                while(!ClientSide1.send_data(previous+'@'+text+'#'));
+                System.out.println("sending "+'@'+text+'#');
+                while(!ClientSide1.send_data('@'+text+'#'));
                 jTextField1.setEnabled(false);
                 ws.dispose();
                 dispose();
@@ -245,7 +244,7 @@ public class Question5 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ClientSide cs=new ClientSide();
-                new Question5(cs,"fdg").setVisible(true);
+                new Question5(cs).setVisible(true);
             }
         });
     }

@@ -277,7 +277,19 @@ class clientThread extends Thread {
                 break;
             }
       }
+      input_queue.take();
+      System.out.println(ID+": Sending data");
+      while(!write_data(os,data));
       System.out.println(ID+": Question9 start");
+      while (true) 
+      {
+            if(is.available()!=0)
+            {
+                System.out.println("Coś przyszło, wrzucam na kolejkę");
+                output_queue.put(ID+": "+is.readUTF());
+                break;
+            }
+      }
  /*     while (true) 
       {    
             if(is.available()!=0)

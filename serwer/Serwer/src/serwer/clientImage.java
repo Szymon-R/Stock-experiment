@@ -48,11 +48,11 @@ public class clientImage {
     public void calculate_income(Vector<Quote_price> quotes)
     {
         String sym1;
-        double old;
-        double neww;
-        double inv;
-        double result;
-        Random rand = new Random();
+        double old=1;
+        double neww=1;
+        double inv=1;
+        double result=1;
+   //     Random rand = new Random();
         for(int i=0; i<invest.size();++i)
         {
             sym1=invest.get(i).name;
@@ -68,7 +68,7 @@ public class clientImage {
                     inv=Double.parseDouble(invest.get(i).invested);
                     result=inv/old*neww-inv;
                     invest.get(i).income=Double.toString(result);
-                    this.income+=(result+rand.nextInt(50)); 
+      //              this.income+=(result+rand.nextInt(50)); 
                 }
             }
         }

@@ -34,6 +34,8 @@ public class Question4 extends javax.swing.JFrame {
        String odp1="Więcej";
        String odp2="Mniej";
        wait_screen ws=new wait_screen();
+       download_screen ds=new download_screen();
+      
        ClientSide ClientSide1;
 
     public Question4(ClientSide ClientSide1) {
@@ -96,6 +98,7 @@ public class Question4 extends javax.swing.JFrame {
         jCheckBox9 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(609, 526));
@@ -250,7 +253,6 @@ public class Question4 extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jCheckBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,7 +264,8 @@ public class Question4 extends javax.swing.JFrame {
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(10, 10, 10)
                                                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -276,23 +279,18 @@ public class Question4 extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(67, 67, 67))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86)))
+                        .addGap(61, 61, 61)
+                        .addComponent(jCheckBox9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jCheckBox6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox4)
@@ -383,6 +381,7 @@ public class Question4 extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
                 if(n==0)
                 {
+                    ds.setLocationRelativeTo(this);
                     String text="";
                     if(jCheckBox4.isSelected())
                     text=jCheckBox4.getText();
@@ -405,9 +404,11 @@ public class Question4 extends javax.swing.JFrame {
 
                         @Override
                         protected Boolean doInBackground() throws Exception {
-
+                            ws.setVisible(true);
                             String lala;
                             lala=ClientSide1.read_data(1000);
+                            ds.setVisible(true);
+                            
                             return true;
                         }
 
@@ -415,9 +416,10 @@ public class Question4 extends javax.swing.JFrame {
                         @Override
                         protected void done() {
                             ws.dispose();
-                            dispose();
+                          
 
                             stock_screen ss=new stock_screen(ClientSide1);
+                            
                             ss.addWindowListener(new WindowAdapter() 
                             {
                                 public void windowClosing(WindowEvent we) 
@@ -429,6 +431,8 @@ public class Question4 extends javax.swing.JFrame {
                                     ss.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                                 }
                             });
+                            ds.dispose();
+                            dispose();
                             ss.setLocationRelativeTo(null);
                             ss.setVisible(true);  
                         }
@@ -441,7 +445,6 @@ public class Question4 extends javax.swing.JFrame {
                 }
             }
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

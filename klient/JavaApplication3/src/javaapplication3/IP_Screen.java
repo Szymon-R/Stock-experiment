@@ -194,7 +194,7 @@ public class IP_Screen extends javax.swing.JFrame {
         }
         else
            
-        if(ClientSide1.connect(temp, "192.168.1.6")!=1)
+        if(ClientSide1.connect(temp, jTextField3.getText())!=1)
       // if(ClientSide1.connect(temp, "10.102.37.150")!=1)
         {
             JOptionPane.showMessageDialog(this,"Nie udało się połączyć z serwerem","Nieudane połączenie",JOptionPane.WARNING_MESSAGE);
@@ -215,7 +215,8 @@ public class IP_Screen extends javax.swing.JFrame {
 
         // Can safely update the GUI from this method.
         @Override
-        protected void done() {
+        protected void done() 
+        {
             ws.dispose();
             dispose();
             Gender_screen gs=new Gender_screen(ClientSide1);
