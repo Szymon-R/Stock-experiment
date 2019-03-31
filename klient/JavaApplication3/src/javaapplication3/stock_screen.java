@@ -91,9 +91,9 @@ public class stock_screen extends javax.swing.JFrame {
         initComponents();
         jTextArea1.setText(pytanie);
         combo_box_init();
+        init_update();
         run_update();
         display_plot();
-        run_update();
         run_timer(20*60);
     }
 
@@ -366,8 +366,7 @@ public class stock_screen extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
-                this.setEnabled(false);
-                                                
+                this.setEnabled(false);                             
                     String sending="@";
                     Quote single;
                     for(int i=0; i<quotes.size();++i)
@@ -447,15 +446,9 @@ public class stock_screen extends javax.swing.JFrame {
                 }
         };
         t.schedule(timerTask,1000,1000);
-
     }
         
 
-
-
-
-    
-    
 void combo_box_init()
 {
     int quotes_number=50;

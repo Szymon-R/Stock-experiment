@@ -32,6 +32,7 @@ public class Serwer_API extends javax.swing.JFrame {
     int step2=1;
     public int client_count=0;
     int counter=0;
+    boolean protector1=true;
     DefaultTableModel model;
     Vector<clientImage> clients=new Vector<clientImage>();
     Vector<Section> sections=new Vector<Section>();
@@ -426,11 +427,11 @@ public class Serwer_API extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja", "Zysk z inwestycji", "Pozycja"
+                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja", "Zysk z inwestycji", "Pozycja", "Rzeczywistość"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -545,7 +546,7 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -560,7 +561,7 @@ public class Serwer_API extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1123, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -579,30 +580,35 @@ public class Serwer_API extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.out.println("Pobieranie kursów akcji");
-        String temp="";
-        get_prices();
-        for(int i=0; i<clients.size();++i)
+       
+        if(protector1)
         {
-            clients.get(i).calculate_income(quotes);
-            for(int j=0; j<clients.get(i).invest.size();++j)
+            System.out.println("Pobieranie kursów akcji");
+            String temp="";
+            get_prices();
+            for(int i=0; i<clients.size();++i)
             {
-                clients.get(i).income+=Double.parseDouble(clients.get(i).invest.get(j).income);
+                clients.get(i).calculate_income(quotes);
+                for(int j=0; j<clients.get(i).invest.size();++j)
+                {
+                    clients.get(i).income+=Double.parseDouble(clients.get(i).invest.get(j).income);
+                }
+
             }
-                    
-        }
-        for(int i=0; i<clients.size();++i)
-        {
-            try
+            for(int i=0; i<clients.size();++i)
             {
-                temp=clients.get(i).ID+":";
-                temp+=Double.toString(clients.get(i).income);
-                temp+=';';
-                temp+=Integer.toString(client_count)+'#';
-                System.out.println("Serwer api wysyła "+temp);
-                output_queue.put(temp);
+                try
+                {
+                    temp=clients.get(i).ID+":";
+                    temp+=Double.toString(clients.get(i).income);
+                    temp+=';';
+                    temp+=Integer.toString(client_count)+'#';
+                    System.out.println("Serwer api wysyła "+temp);
+                    output_queue.put(temp);
+                }
+                catch(Exception e){};
             }
-            catch(Exception e){};
+            protector1=false;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -656,6 +662,8 @@ public class Serwer_API extends javax.swing.JFrame {
                 position=Integer.parseInt(clients.get(i).answers.get(9));
                 reality=i+1;
                 difference=Math.abs(position-reality);
+                clients.get(i).answers.add(Double.toString(clients.get(i).income));
+                clients.get(i).answers.add(Integer.toString(reality));
                 for(int j=0; j<5;++j)
                 {
                     if(difference==j)
@@ -670,7 +678,9 @@ public class Serwer_API extends javax.swing.JFrame {
                     }
                 }
             }
+        write_data();
         }
+        
         catch (Exception e){};
     }
     
