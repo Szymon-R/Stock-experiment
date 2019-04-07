@@ -225,8 +225,11 @@ public class IP_Screen extends javax.swing.JFrame {
                     public void windowClosing(WindowEvent we) 
                     {
                     int result = JOptionPane.showConfirmDialog(gs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        gs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(gs, "Nie można teraz wyłączyć progamu.");
+                    gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                 //       gs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     else if(result == JOptionPane.NO_OPTION)
                         gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

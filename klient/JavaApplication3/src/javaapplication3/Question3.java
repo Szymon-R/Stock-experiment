@@ -22,8 +22,8 @@ public class Question3 extends javax.swing.JFrame {
     /**
      * Creates new form Question3
      */
-   String pytanie="Ile według ciebie za 10 lat średnio będzie\n"
-           + "zarabiał absolwent twojego kierunku\n"
+   String pytanie="Ile według ciebie za 10 lat średnio miesięcznie\n"
+           +"będzie zarabiał absolwent twojego kierunku \n"
            + "Uniwersytetu Ekonomicznego?";
    String pytanie2="Uważasz, że za 10 lat będziesz zarabiać więcej\n"
            + "czy mniej niż podana przez Ciebie średnia?";
@@ -277,8 +277,8 @@ public class Question3 extends javax.swing.JFrame {
                 click=1;
                 jTextArea2.setVisible(true);
                 jScrollPane2.setVisible(true);
-                jTextArea1.setVisible(false);
-                jScrollPane1.setVisible(false);
+              //  jTextArea1.setVisible(false);
+               // jScrollPane1.setVisible(false);
                 jCheckBox2.setVisible(true);
                 jCheckBox3.setVisible(true);
                 jTextField1.setEnabled(false);
@@ -298,7 +298,7 @@ public class Question3 extends javax.swing.JFrame {
             int n = JOptionPane.showConfirmDialog(
             this,
             "Czy jesteś pewien, że chcesz przejść dalej?",
-            "Potiwerdzenie",
+            "Potwierdzenie",
             JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -333,8 +333,10 @@ public class Question3 extends javax.swing.JFrame {
                     public void windowClosing(WindowEvent we) 
                     {
                     int result = JOptionPane.showConfirmDialog(q4,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        q4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(q4, "Nie można teraz wyłączyć progamu.");
+                    q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

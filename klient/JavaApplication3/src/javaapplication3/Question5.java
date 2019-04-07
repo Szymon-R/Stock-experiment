@@ -179,7 +179,7 @@ public class Question5 extends javax.swing.JFrame {
             int n = JOptionPane.showConfirmDialog(
                     this,
                     "Czy jesteś pewien, że chcesz przejść dalej?",
-                    "Potiwerdzenie",
+                    "Potwierdzenie",
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -195,8 +195,10 @@ public class Question5 extends javax.swing.JFrame {
                     public void windowClosing(WindowEvent we) 
                     {
                     int result = JOptionPane.showConfirmDialog(rs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        rs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(rs, "Nie można teraz wyłączyć progamu.");
+                    rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

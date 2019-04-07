@@ -64,7 +64,7 @@ public class Results_screen extends javax.swing.JFrame {
                 jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+" uczestników\n"
                         + "zająłeś. Za poprawne podanie zajętego przez\n"
                         + "Ciebie miejsca otrzymasz 5 punktów, za każdą\n"
-                        + "różnicę miejsca -1 punkt.");
+                        + "różnicę miejsca jeden punkt mnie.");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);
                 jComboBox1.setVisible(true);
@@ -254,7 +254,7 @@ public class Results_screen extends javax.swing.JFrame {
              int n = JOptionPane.showConfirmDialog(
                     this,
                     "Czy jesteś pewien, że chcesz przejść dalej?",
-                    "Potiwerdzenie",
+                    "Potwierdzenie",
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {

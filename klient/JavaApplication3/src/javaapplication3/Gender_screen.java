@@ -181,7 +181,7 @@ public class Gender_screen extends javax.swing.JFrame {
             int n = JOptionPane.showConfirmDialog(
                 this,
                 "Czy jesteś pewien, że chcesz przejść dalej?",
-                "Potiwerdzenie",
+                "Potwierdzenie",
                 JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -198,8 +198,10 @@ public class Gender_screen extends javax.swing.JFrame {
                     public void windowClosing(WindowEvent we) 
                     {
                     int result = JOptionPane.showConfirmDialog(sq,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        sq.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(sq, "Nie można teraz wyłączyć progamu.");
+                    sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

@@ -223,7 +223,7 @@ public class Question1 extends javax.swing.JFrame {
             int n = JOptionPane.showConfirmDialog(
             this,
             "Czy jesteś pewien, że chcesz przejść dalej?",
-            "Potiwerdzenie",
+            "Potwierdzenie",
             JOptionPane.YES_NO_OPTION);
             if(n==0)
             {

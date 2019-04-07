@@ -14,7 +14,7 @@ import javax.swing.SwingWorker;
 public class Last_screen extends javax.swing.JFrame {
 
     wait_screen ws=new wait_screen();
-    String pytanie="Oczekiwanie na wynik końcowy";
+    String pytanie="Oczekiwanie na wynik końcowy.";
     ClientSide ClientSide1;
 
        

@@ -5,6 +5,8 @@
  */
 package javaapplication3;
 
+import javax.swing.JRootPane;
+
 /**
  *
  * @author Szymon
@@ -15,6 +17,8 @@ public class download_screen extends javax.swing.JFrame {
      * Creates new form download_screen
      */
     public download_screen() {
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
     }
 
