@@ -76,7 +76,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="20" style="3"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="         Pobieranie danych gie&#x142;dowych"/>
+            <Property name="text" type="java.lang.String" value="       Downloading historical stock data"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

@@ -5,6 +5,8 @@
  */
 package javaapplication3;
 
+import javax.swing.JRootPane;
+
 /**
  *
  * @author Szymon
@@ -15,6 +17,8 @@ public class download_screen extends javax.swing.JFrame {
      * Creates new form download_screen
      */
     public download_screen() {
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);  
         initComponents();
     }
 
@@ -36,7 +40,7 @@ public class download_screen extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setFont(new java.awt.Font("Arial", 3, 20)); // NOI18N
-        jLabel5.setText("         Pobieranie danych giełdowych");
+        jLabel5.setText("       Downloading historical stock data");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/wilk.png"))); // NOI18N
 

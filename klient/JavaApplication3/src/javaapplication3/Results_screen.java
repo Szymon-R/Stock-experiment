@@ -18,7 +18,7 @@ import javax.swing.SwingWorker;
  */
 public class Results_screen extends javax.swing.JFrame {
 
-    String pytanie="Oczekiwanie na wyniki inwestycji";
+    String pytanie="Waiting for results.";
     ClientSide ClientSide1;
     int client_count;
     wait_screen ws=new wait_screen();
@@ -61,10 +61,14 @@ public class Results_screen extends javax.swing.JFrame {
                 end=output.indexOf("#");
                 temp=output.substring(start+1, end);
                 client_count=Integer.parseInt(temp);
-                jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+" uczestników\n"
-                        + "zająłeś. Za poprawne podanie zajętego przez\n"
-                        + "Ciebie miejsca otrzymasz 5 punktów, za każdą\n"
-                        + "różnicę miejsca -1 punkt.");
+
+                
+                jTextArea1.setText("Estimate your position among "+temp+" experiment\n"
+                        + "participants. If you choose correctly,\n"
+                        + "you will get 5 points, for every difference\n"
+                        + "between your estimated position and real one \n"
+                        + "you will get one point less\n"
+                        + "(You can get from 5 to 0 points).");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);
                 jComboBox1.setVisible(true);
@@ -100,7 +104,7 @@ public class Results_screen extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -113,7 +117,7 @@ public class Results_screen extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 7");
+        jLabel4.setText("Question 7");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/numer 7.jpg"))); // NOI18N
 
@@ -124,7 +128,7 @@ public class Results_screen extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(117, 117, 117)
                 .addComponent(jLabel4)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
@@ -154,7 +158,7 @@ public class Results_screen extends javax.swing.JFrame {
         });
 
         jTextField1.setEditable(false);
-        jTextField1.setText("Twój kapitał początkowy: ");
+        jTextField1.setText("Money you've started with: ");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -162,7 +166,7 @@ public class Results_screen extends javax.swing.JFrame {
         });
 
         jTextField2.setEditable(false);
-        jTextField2.setText("Twój kapitał końcowy: ");
+        jTextField2.setText("Your money after investition: ");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -253,8 +257,8 @@ public class Results_screen extends javax.swing.JFrame {
 
              int n = JOptionPane.showConfirmDialog(
                     this,
-                    "Czy jesteś pewien, że chcesz przejść dalej?",
-                    "Potiwerdzenie",
+                    "Are you sure you want to continue?",
+                    "Confirmation",
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -284,7 +288,7 @@ public class Results_screen extends javax.swing.JFrame {
                     {
                         public void windowClosing(WindowEvent we) 
                         {
-                        int result = JOptionPane.showConfirmDialog(ls,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                        int result = JOptionPane.showConfirmDialog(ls,"Are you sure you want to close application?", "Confirmation",JOptionPane.YES_NO_OPTION);
                         if(result == JOptionPane.YES_OPTION)
                             ls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         else if(result == JOptionPane.NO_OPTION)

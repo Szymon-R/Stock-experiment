@@ -17,13 +17,14 @@ import javax.swing.SwingWorker;
  */
 public class Question2 extends javax.swing.JFrame {
 
-   String pytanie="Czy uważasz, że gdybyś zainwestował w Bitcoina\n"
-           + "w czasie jego silnego wzrostu wartości, to\n"
-           + "zdążyłbyś się wycofać przed gwałtownym\n"
-           + "spadkiem wartości, czy straciłbyś\n"
-           + "większość pieniędzy?";
-    String odp1="Zdążyłbym się wycofać";
-    String odp2="Straciłbym większość";
+
+   
+    String pytanie="Do you think, that if you have invested \n"
+            + "in Bitcoin during its strong increase ,\n"
+            + "would you have sold your shares with profit,\n"
+            + "or would you have lost most of your money?";
+    String odp1="I’d have made a profit";
+    String odp2="I’d have lost most of my money";
 
     ClientSide ClientSide1;
     wait_screen ws;
@@ -88,7 +89,7 @@ public class Question2 extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 3");
+        jLabel4.setText("Question 3");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/number_3_blue.png"))); // NOI18N
 
@@ -141,7 +142,7 @@ public class Question2 extends javax.swing.JFrame {
         });
         jPanel2.add(jCheckBox2);
 
-        jButton1.setText("Dalej");
+        jButton1.setText("Next");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -216,15 +217,15 @@ public class Question2 extends javax.swing.JFrame {
 
         if(!(jCheckBox1.isSelected()||jCheckBox2.isSelected()))
         {
-            JOptionPane.showMessageDialog(this, "Żadna odpowiedź nie została wybrana.","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You didn't choose any answer.","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         else
         {
             int n = JOptionPane.showConfirmDialog(
                 this,
-                "Czy jesteś pewien, że chcesz przejść dalej?",
-                "Potiwerdzenie",
+                "Are you sure you want to continue?",
+                "Confirmation",
                 JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -256,9 +257,11 @@ public class Question2 extends javax.swing.JFrame {
                     {
                     public void windowClosing(WindowEvent we) 
                     {
-                    int result = JOptionPane.showConfirmDialog(q3,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        q3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(q3,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(q3, "Can't leave application now");
+                    q3.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         q3.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

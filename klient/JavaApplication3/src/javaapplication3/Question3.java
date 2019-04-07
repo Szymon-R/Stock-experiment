@@ -22,13 +22,14 @@ public class Question3 extends javax.swing.JFrame {
     /**
      * Creates new form Question3
      */
-   String pytanie="Ile według ciebie za 10 lat średnio będzie\n"
-           + "zarabiał absolwent twojego kierunku\n"
-           + "Uniwersytetu Ekonomicznego?";
-   String pytanie2="Uważasz, że za 10 lat będziesz zarabiać więcej\n"
-           + "czy mniej niż podana przez Ciebie średnia?";
-   String odp1="Więcej";
-   String odp2="Mniej";
+   
+   String pytanie="In your opinion, how much a graduate of\n"
+           + "your field of study will be earning on average\n"
+           + "in 10 years?";
+   String pytanie2="Do you think that you will be earning\n"
+           + "more or less?";
+   String odp1="More";
+   String odp2="Less";
     wait_screen ws=new wait_screen();
     public Question3(ClientSide ClientSide1) {
         
@@ -96,7 +97,7 @@ public class Question3 extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 4");
+        jLabel4.setText("Question 4");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/numer 4.png"))); // NOI18N
 
@@ -127,7 +128,7 @@ public class Question3 extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton1.setText("Dalej");
+        jButton1.setText("Next");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -141,7 +142,7 @@ public class Question3 extends javax.swing.JFrame {
         jTextArea1.setBorder(null);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel1.setText("Wpisz kwotę:");
+        jLabel1.setText("Insert your proposition:");
 
         jCheckBox3.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
@@ -194,14 +195,17 @@ public class Question3 extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGap(5, 5, 5))
                             .addComponent(jScrollPane1))
                         .addContainerGap())))
@@ -253,7 +257,7 @@ public class Question3 extends javax.swing.JFrame {
         {
             if(jTextField1.getText()==null)
             {
-                JOptionPane.showMessageDialog(this, "Wpisana wartość jest nieprawidłowa","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Number you've inserted is incorrect.","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             try
@@ -262,23 +266,23 @@ public class Question3 extends javax.swing.JFrame {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(this, "Wpisana wartość jest nieprawidłowa","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Number you've inserted is incorrect.","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
 
             int n = JOptionPane.showConfirmDialog(
                     this,
-                    "Czy jesteś pewien, że chcesz przejść dalej?",
-                    "Potiwerdzenie",
+                    "Are you sure you want to continue?",
+                    "Confirmation",
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
                 click=1;
                 jTextArea2.setVisible(true);
                 jScrollPane2.setVisible(true);
-                jTextArea1.setVisible(false);
-                jScrollPane1.setVisible(false);
+              //  jTextArea1.setVisible(false);
+               // jScrollPane1.setVisible(false);
                 jCheckBox2.setVisible(true);
                 jCheckBox3.setVisible(true);
                 jTextField1.setEnabled(false);
@@ -290,15 +294,15 @@ public class Question3 extends javax.swing.JFrame {
         {
             if(!(jCheckBox3.isSelected()||jCheckBox2.isSelected()))
             {
-               JOptionPane.showMessageDialog(this, "Żadna odpowiedź nie została wybrana.","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE); 
+               JOptionPane.showMessageDialog(this, "You didn't choose any answer.","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE); 
                return;
             }
         else
         {
             int n = JOptionPane.showConfirmDialog(
             this,
-            "Czy jesteś pewien, że chcesz przejść dalej?",
-            "Potiwerdzenie",
+                "Are you sure you want to continue?",
+                "Confirmation",
             JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -332,9 +336,11 @@ public class Question3 extends javax.swing.JFrame {
                     {
                     public void windowClosing(WindowEvent we) 
                     {
-                    int result = JOptionPane.showConfirmDialog(q4,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        q4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(q4,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(q4, "Can't leave application now");
+                    q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

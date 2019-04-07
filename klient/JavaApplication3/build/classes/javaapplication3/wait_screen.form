@@ -79,7 +79,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="20" style="3"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Oczekiwanie na pozosta&#x142;ych uczestnik&#xf3;w"/>
+            <Property name="text" type="java.lang.String" value="       Waiting for other participants"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">

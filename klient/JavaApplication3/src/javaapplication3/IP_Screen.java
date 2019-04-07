@@ -71,7 +71,7 @@ public class IP_Screen extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Łączenie z serwerem");
+        jLabel4.setText("Connecting to server");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,7 +99,7 @@ public class IP_Screen extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Calibri", 1, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Wpisz IP lokalnego serwera i kliknij connect");
+        jLabel2.setText("Insert IP of the server and press Connect");
 
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
@@ -131,7 +131,7 @@ public class IP_Screen extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextField3))
-                        .addGap(0, 19, Short.MAX_VALUE))
+                        .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,7 +174,7 @@ public class IP_Screen extends javax.swing.JFrame {
             
     if(!ClientSide1.validIP(jTextField3.getText()))
     {
-        JOptionPane.showMessageDialog(this, "Wpisane IP ma nieprawidłową formę.","Problem z IP",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "IP has incorrect form","IP problem",JOptionPane.WARNING_MESSAGE);
         return;
     }
     else
@@ -197,7 +197,7 @@ public class IP_Screen extends javax.swing.JFrame {
         if(ClientSide1.connect(temp, jTextField3.getText())!=1)
       // if(ClientSide1.connect(temp, "10.102.37.150")!=1)
         {
-            JOptionPane.showMessageDialog(this,"Nie udało się połączyć z serwerem","Nieudane połączenie",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Couldn't connect to server. Try again later.","Connection lost",JOptionPane.WARNING_MESSAGE);
             System.out.println("Nie udało się połączyć z serwerem");
             return;
         }
@@ -224,9 +224,12 @@ public class IP_Screen extends javax.swing.JFrame {
                 {
                     public void windowClosing(WindowEvent we) 
                     {
-                    int result = JOptionPane.showConfirmDialog(gs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        gs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(gs,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(gs, "Can't leave application now");
+                    gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                 //       gs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     else if(result == JOptionPane.NO_OPTION)
                         gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

@@ -698,7 +698,7 @@ public class Serwer_API extends javax.swing.JFrame {
             return 4;
         else if(answer.equals("[41-50%]"))
             return 5;
-        else if(answer.equals("[[powyżej 50%]]"))
+        else if(answer.equals("[more than 50%]"))
             return 6;
         else
             return 0;

@@ -17,9 +17,9 @@ import javax.swing.SwingWorker;
  */
 public class Stock_question extends javax.swing.JFrame {
 
-    String pytanie="Czy inwestujesz na giełdzie?";
-    String odp1="Tak";
-    String odp2="Nie";
+    String pytanie="Do you invest on market?";
+    String odp1="Yes";
+    String odp2="No";
     wait_screen ws=new wait_screen();
     ClientSide ClientSide1;
     String answer;
@@ -66,7 +66,7 @@ public class Stock_question extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 2");
+        jLabel4.setText("Question 2");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/number_2_red.jpg"))); // NOI18N
 
@@ -190,15 +190,15 @@ public class Stock_question extends javax.swing.JFrame {
 
         if(!(jCheckBox1.isSelected()||jCheckBox2.isSelected()))
         {
-            JOptionPane.showMessageDialog(this, "Żadna odpowiedź nie została wybrana.","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You didn't choose any answer","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         else
         {
             int n = JOptionPane.showConfirmDialog(
                 this,
-                "Czy jesteś pewien, że chcesz przejść dalej?",
-                "Potiwerdzenie",
+                "Are you sure you want to continue?",
+                "Confirmation",
                 JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -234,9 +234,11 @@ public class Stock_question extends javax.swing.JFrame {
                         {
                             public void windowClosing(WindowEvent we) 
                             {
-                            int result = JOptionPane.showConfirmDialog(q2,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                            if(result == JOptionPane.YES_OPTION)
-                                q2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(q2,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(q2, "Can't leave application now");
+                    q2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                             else if(result == JOptionPane.NO_OPTION)
                                 q2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                             }

@@ -66,7 +66,7 @@
                               <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                               <Component id="jTextField3" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="19" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
@@ -151,7 +151,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x141;&#x105;czenie z serwerem"/>
+                <Property name="text" type="java.lang.String" value="Connecting to server"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -164,7 +164,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Wpisz IP lokalnego serwera i kliknij connect"/>
+            <Property name="text" type="java.lang.String" value="Insert IP of the server and press Connect"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">

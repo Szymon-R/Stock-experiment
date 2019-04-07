@@ -17,9 +17,9 @@ import javax.swing.SwingWorker;
  */
 public class Gender_screen extends javax.swing.JFrame {
 
-    String pytanie="Wybierz płeć";
-    String odp1="Kobieta";
-    String odp2="Mężczyzna";
+    String pytanie="Select your gender (only 2 are avaliable. Sorry.)";
+    String odp1="Woman";
+    String odp2="Man";
     wait_screen ws=new wait_screen();
     ClientSide ClientSide1;
     public Gender_screen(ClientSide ClientSide1) {       
@@ -64,7 +64,7 @@ public class Gender_screen extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 1");
+        jLabel4.setText("Question 1");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/number_1_blue.png"))); // NOI18N
 
@@ -120,7 +120,7 @@ public class Gender_screen extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Wybierz płeć");
 
-        jButton1.setText("Dalej");
+        jButton1.setText("Next");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -173,15 +173,15 @@ public class Gender_screen extends javax.swing.JFrame {
 
         if(!(jCheckBox1.isSelected()||jCheckBox2.isSelected()))
         {
-            JOptionPane.showMessageDialog(this, "Żadna odpowiedź nie została wybrana.","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You didn't choose any answer!","Incorrect selection",JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         else
         {
             int n = JOptionPane.showConfirmDialog(
                 this,
-                "Czy jesteś pewien, że chcesz przejść dalej?",
-                "Potiwerdzenie",
+                "Are you sure you want to continue?",
+                "Confirmation",
                 JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -197,9 +197,11 @@ public class Gender_screen extends javax.swing.JFrame {
                 {
                     public void windowClosing(WindowEvent we) 
                     {
-                    int result = JOptionPane.showConfirmDialog(sq,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        sq.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(sq,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(sq, "Can't leave application now");
+                    sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }

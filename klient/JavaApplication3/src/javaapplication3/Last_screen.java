@@ -14,7 +14,7 @@ import javax.swing.SwingWorker;
 public class Last_screen extends javax.swing.JFrame {
 
     wait_screen ws=new wait_screen();
-    String pytanie="Oczekiwanie na wynik końcowy";
+    String pytanie="Wainting for final results.";
     ClientSide ClientSide1;
 
        
@@ -77,7 +77,7 @@ public class Last_screen extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 8");
+        jLabel4.setText("Question 8");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/numer 8.jpg"))); // NOI18N
 
@@ -109,7 +109,7 @@ public class Last_screen extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridLayout(4, 1));
 
         jTextField1.setEditable(false);
-        jTextField1.setText("Twój wynik: ");
+        jTextField1.setText("Your score: ");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);

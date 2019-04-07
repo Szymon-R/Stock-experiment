@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Question5 extends javax.swing.JFrame {
        wait_screen ws=new wait_screen();
-    String pytanie="Oszacuj jaki będzie Twój zysk z tej inwestycji";
+    String pytanie="How do you think what will be your profit?";
     ClientSide ClientSide1;
     public Question5(ClientSide ClientSide1) {
         this.ClientSide1=ClientSide1;
@@ -53,7 +53,7 @@ public class Question5 extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Pytanie 6");
+        jLabel4.setText("Question 6");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javaapplication3/numer 6.jpg"))); // NOI18N
 
@@ -64,7 +64,7 @@ public class Question5 extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(117, 117, 117)
                 .addComponent(jLabel4)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
@@ -96,7 +96,8 @@ public class Question5 extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Tutaj będzie bardzo fajne i ciekawe pytanie");
 
-        jButton1.setText("Dalej");
+        jButton1.setText("Next");
+        jButton1.setToolTipText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -163,7 +164,7 @@ public class Question5 extends javax.swing.JFrame {
 
             if(jTextField1.getText()==null)
             {
-                JOptionPane.showMessageDialog(this, "Wpisana wartość jest nieprawidłowa","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Number you've inserted is incorrect.","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             try
@@ -172,14 +173,14 @@ public class Question5 extends javax.swing.JFrame {
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(this, "Wpisana wartość jest nieprawidłowa","Nieprawidłowy wybór",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Number you've inserted is incorrect.","Incorrect selection.",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
             int n = JOptionPane.showConfirmDialog(
                     this,
-                    "Czy jesteś pewien, że chcesz przejść dalej?",
-                    "Potiwerdzenie",
+                    "Are you sure you want to continue?",
+                    "Confirmation",
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
@@ -194,9 +195,11 @@ public class Question5 extends javax.swing.JFrame {
                 {
                     public void windowClosing(WindowEvent we) 
                     {
-                    int result = JOptionPane.showConfirmDialog(rs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION)
-                        rs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(rs,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(rs, "Can't leave application now");
+                    rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
                     else if(result == JOptionPane.NO_OPTION)
                         rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
