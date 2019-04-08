@@ -51,16 +51,16 @@ public class Quote {
     {
         return this.symbol;
     }
-   private Date yesterday()
+   private Date yesterday(int count)
    {
         final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE,-1);
+        cal.add(Calendar.DATE,-count);
         return cal.getTime();
    }
-   private String getYesterdayDateString() 
+   private String getYesterdayDateString(int count) 
    {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        return dateFormat.format(yesterday());
+        return dateFormat.format(yesterday(count));
    }
    public void modify_dates()
    {
@@ -71,8 +71,9 @@ public class Quote {
            temp1=temp1.replaceAll("\\s+","");
        }
    }
-    public void get_historical_data(int records_number)
+    public void get_historical_data(int records_number, int back)
     {
+        int found=0;
         System.out.println("Pobieranie danych historycznych");
         int data_counter=0;
         int lines_counter=1;
@@ -81,8 +82,9 @@ public class Quote {
         String temp_data="";
         String temp_value="";
         String start_date;
-    
-        start_date=getYesterdayDateString();
+
+        start_date=getYesterdayDateString(back);
+
         System.out.println(start_date);
         try
         {
@@ -94,12 +96,13 @@ public class Quote {
             {
                 ++lines_counter;
             }
-            start_date="03/22/2019";
+           // start_date="03/22/2019";
             while(line!=null)
             {
                 if(line.contains(start_date))
                 {
                     date_line_pointer=lines_counter;
+                    found=1;
                     break;
                 }
                 line =buff.readLine();
@@ -145,7 +148,10 @@ public class Quote {
                 //System.out.println(lines_counter+") "+line);
                 ++lines_counter;
             }
-            modify_dates();
+            if(found==1)
+                modify_dates();
+            else
+               get_historical_data(records_number,back+1);
         }
         catch(IOException exp)
         {

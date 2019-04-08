@@ -234,6 +234,7 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 1\n");
         step2=1;
         while(step2==1)
         {
@@ -246,6 +247,7 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 2\n");
         step2=1;
         while(step2==1)
         {
@@ -258,6 +260,7 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 3\n");
         step2=1;
         while(step2==1)
         {
@@ -269,6 +272,7 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 4\n");
         step2=1;
         while(step2==1)
         {
@@ -280,6 +284,7 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 5, giełdowe\n");
         step2=1;
         while(step2==1)
         {
@@ -291,11 +296,13 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 6\n");
         step2=1;
         while(step2==1)
         {
             process_answer(10);
         }
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 7\n");
         step2=1;
         while(step2==1)
         {
@@ -394,7 +401,9 @@ public class Serwer_API extends javax.swing.JFrame {
         for(int i=0; i<quotes.size();++i)
         {
             System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
+            
             quotes.get(i).update_value();
+            jTextArea1.setText(jTextArea1.getText()+quotes.get(i).get_name()+ " "+quotes.get(i).current_price+"\n");
         }
     }
     /**
@@ -417,6 +426,9 @@ public class Serwer_API extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -517,6 +529,13 @@ public class Serwer_API extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Status eksperymentu:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -526,14 +545,16 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                    .addComponent(jTextField2)))
+                    .addComponent(jTextField2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,13 +565,16 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addGap(55, 55, 55)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
         );
 
         jButton2.getAccessibleContext().setAccessibleDescription("");
@@ -572,6 +596,8 @@ public class Serwer_API extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jTextArea1.setText(jTextArea1.getText()+"Rozpoczynanie eksperymentu\n");
+        jTextArea1.setText(jTextArea1.getText()+"Jest "+client_count+" uczestników\n");
         this.step1=0;
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -584,6 +610,7 @@ public class Serwer_API extends javax.swing.JFrame {
         if(protector1)
         {
             System.out.println("Pobieranie kursów akcji");
+            jTextArea1.setText(jTextArea1.getText()+"Pobieranie kursów akcji\n");
             String temp="";
             get_prices();
             for(int i=0; i<clients.size();++i)
@@ -712,10 +739,13 @@ public class Serwer_API extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
