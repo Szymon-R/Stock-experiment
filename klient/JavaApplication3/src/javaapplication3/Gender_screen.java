@@ -17,7 +17,7 @@ import javax.swing.SwingWorker;
  */
 public class Gender_screen extends javax.swing.JFrame {
 
-    String pytanie="Select your gender (only 2 are avaliable. Sorry.)";
+    String pytanie="Select your gender.";
     String odp1="Woman";
     String odp2="Man";
     wait_screen ws=new wait_screen();

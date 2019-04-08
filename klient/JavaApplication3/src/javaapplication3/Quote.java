@@ -51,16 +51,16 @@ public class Quote {
     {
         return this.symbol;
     }
-   private Date yesterday()
+   private Date yesterday(int counter)
    {
         final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE,-1);
+        cal.add(Calendar.DATE,-counter);
         return cal.getTime();
    }
-   private String getYesterdayDateString() 
+   private String getYesterdayDateString(int counter) 
    {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        return dateFormat.format(yesterday());
+        return dateFormat.format(yesterday(counter));
    }
    public void modify_dates()
    {
@@ -71,7 +71,7 @@ public class Quote {
            temp1=temp1.replaceAll("\\s+","");
        }
    }
-    public void get_historical_data(int records_number)
+    public void get_historical_data(int records_number, int counter)
     {
         System.out.println("Pobieranie danych historycznych");
         int data_counter=0;
@@ -81,8 +81,8 @@ public class Quote {
         String temp_data="";
         String temp_value="";
         String start_date;
-    
-        start_date=getYesterdayDateString();
+        int found=0;
+        start_date=getYesterdayDateString(counter);
         System.out.println(start_date);
         try
         {
@@ -94,12 +94,12 @@ public class Quote {
             {
                 ++lines_counter;
             }
-            start_date="03/22/2019";
             while(line!=null)
             {
                 if(line.contains(start_date))
                 {
                     date_line_pointer=lines_counter;
+                    found=1;
                     break;
                 }
                 line =buff.readLine();
@@ -145,7 +145,10 @@ public class Quote {
                 //System.out.println(lines_counter+") "+line);
                 ++lines_counter;
             }
-            modify_dates();
+            if(found==1)
+                modify_dates();
+            else if(found==0)
+                get_historical_data(records_number,counter+1);
         }
         catch(IOException exp)
         {

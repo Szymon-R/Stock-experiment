@@ -343,7 +343,7 @@ public class stock_screen extends javax.swing.JFrame {
        {
            quotes.get(current).invested-=1;
            current_invests-=1;
-           jTextField2.setText("ZInvested money: "+quotes.get(current).invested*one_investment+"USD");
+           jTextField2.setText("Invested money: "+quotes.get(current).invested*one_investment+"USD");
            jTextField3.setText("Money left: "+(max_invests*one_investment-one_investment*current_invests)+"USD");
        }
         
@@ -455,7 +455,7 @@ void combo_box_init()
     for(int i=0; i<quotes.size();++i)
     {
         jComboBox1.addItem(quotes.get(i).get_name());
-        quotes.get(i).get_historical_data(quotes_number);
+        quotes.get(i).get_historical_data(quotes_number,1);
     }
 }
 private void display_plot()
