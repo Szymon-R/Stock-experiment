@@ -18,11 +18,18 @@ import javax.swing.SwingWorker;
 public class Question2 extends javax.swing.JFrame {
 
 
+    String pytanie="Let's say you invested in Bitcoin\n"
+            + "when its price was increasing fast.\n"
+            + "Do you think, that you would manage\n"
+            + "to sell it with profit before the crash, or\n"
+            + "would you most likely lose most of your money?";
    
+
+/*
     String pytanie="Do you think, that if you have invested \n"
             + "in Bitcoin during its strong increase ,\n"
             + "would you have sold your shares with profit,\n"
-            + "or would you have lost most of your money?";
+            + "or would you have lost most of your money?";*/
     String odp1="I’d have made a profit";
     String odp2="I’d have lost most of my money";
 

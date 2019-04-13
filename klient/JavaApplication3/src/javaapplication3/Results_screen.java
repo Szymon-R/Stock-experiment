@@ -65,10 +65,10 @@ public class Results_screen extends javax.swing.JFrame {
                 
                 jTextArea1.setText("Estimate your position among "+temp+" experiment\n"
                         + "participants. If you choose correctly,\n"
-                        + "you will get 5 points, for every difference\n"
-                        + "between your estimated position and real one \n"
-                        + "you will get one point less\n"
-                        + "(You can get from 5 to 0 points).");
+                        + "you will get 2 points, for every difference\n"
+                        + "between your estimated position and\n"
+                        + "the real one you will get 0.5 point less\n"
+                        + "(You can get from 2 to 0 points).");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);
                 jComboBox1.setVisible(true);
@@ -150,7 +150,7 @@ public class Results_screen extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jLabel1.setText("Tutaj będzie bardzo fajne i ciekawe pytanie");
 
-        jButton1.setText("Dalej");
+        jButton1.setText("Next");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -166,7 +166,7 @@ public class Results_screen extends javax.swing.JFrame {
         });
 
         jTextField2.setEditable(false);
-        jTextField2.setText("Your money after investition: ");
+        jTextField2.setText("Your money after the investment: ");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);

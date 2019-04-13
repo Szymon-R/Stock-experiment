@@ -17,7 +17,7 @@ import javax.swing.SwingWorker;
  */
 public class Stock_question extends javax.swing.JFrame {
 
-    String pytanie="Do you invest on market?";
+    String pytanie="Do you invest on financial market?";
     String odp1="Yes";
     String odp2="No";
     wait_screen ws=new wait_screen();

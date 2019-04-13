@@ -14,7 +14,7 @@ import javax.swing.SwingWorker;
 public class Last_screen extends javax.swing.JFrame {
 
     wait_screen ws=new wait_screen();
-    String pytanie="Wainting for final results.";
+    String pytanie="Waiting for final results.";
     ClientSide ClientSide1;
 
        

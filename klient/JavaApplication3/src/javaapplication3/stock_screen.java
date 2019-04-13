@@ -46,10 +46,10 @@ public class stock_screen extends javax.swing.JFrame {
 
     String pytanie="There are a 15 companies listed on\n"
             + "USA stock exchange. You can see historical data\n"
-            + "of each one from last 30 days and current\n"
-            + "share price. Your task is to invest 100 000USD\n"
-            + "and make the maximum profit. You can invest in\n"
-            + "all of them with 10 000 step.";
+            + "of each one from last 30 days and current share\n"
+            + "price. Your task is to invest 100 000USD and\n"
+            + "make the maximum profit. Choose the companies\n"
+            + "and amounts of investment (in multiples of 10 000).";
     public stock_screen(ClientSide ClientSide1) {
         this.ClientSide1 = ClientSide1;
         this.one_investment = ClientSide1.one_investment;
@@ -541,24 +541,24 @@ public void wait_for_response()
         @Override
         protected void done() {
             ws.dispose();
-            Question5 qs5=new Question5(ClientSide1);
-            qs5.addWindowListener(new WindowAdapter() {
+            Results_screen rs=new Results_screen(ClientSide1);
+            rs.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent we) {
-                    int result = JOptionPane.showConfirmDialog(qs5,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
+                    int result = JOptionPane.showConfirmDialog(rs,"Are you sure you want to quit application", "Confirmation",JOptionPane.YES_NO_OPTION);
                     if(result == JOptionPane.YES_OPTION){
-                    JOptionPane.showMessageDialog(qs5, "Can't leave application now");
-                    qs5.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    JOptionPane.showMessageDialog(rs, "Can't leave application now");
+                    rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
                      else if (result == JOptionPane.NO_OPTION) {
                         
-                        qs5.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                        rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
                 }
             });
             dispose();
             setVisible(false);
-            qs5.setLocationRelativeTo(null);
-            qs5.setVisible(true);
+            rs.setLocationRelativeTo(null);
+            rs.setVisible(true);
         }
 
     };

@@ -26,12 +26,12 @@ public class Serwer {
   private static Socket clientSocket = null;
 
   // This chat server can accept up to maxClientsCount clients' connections.
-  private static final int maxClientsCount = 50;
+  private static final int maxClientsCount = 80;
   private static final clientThread[] clients = new clientThread[maxClientsCount];
   
   public static void main(String args[]) {
-    BlockingQueue<String> MOSI= new LinkedBlockingQueue<String>(50);
-    BlockingQueue<String> MISO= new LinkedBlockingQueue<String>(50);
+    BlockingQueue<String> MOSI= new LinkedBlockingQueue<String>(maxClientsCount);
+    BlockingQueue<String> MISO= new LinkedBlockingQueue<String>(maxClientsCount);
     
     System.out.println("Starting Server API");
     Serwer_API SA1=new Serwer_API(MISO,MOSI);
@@ -280,7 +280,7 @@ class clientThread extends Thread {
       input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
-      System.out.println(ID+": Question9 start");
+   /*   System.out.println(ID+": Question9 start");
       while (true) 
       {
             if(is.available()!=0)
@@ -289,7 +289,7 @@ class clientThread extends Thread {
                 output_queue.put(ID+": "+is.readUTF());
                 break;
             }
-      }
+      }*/
  /*     while (true) 
       {    
             if(is.available()!=0)

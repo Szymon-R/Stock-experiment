@@ -5,6 +5,8 @@
  */
 package serwer;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import static java.awt.image.ImageObserver.ERROR;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -19,6 +21,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 import java.util.concurrent.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -42,9 +47,6 @@ public class Serwer_API extends javax.swing.JFrame {
 
         sections.add(new Section(0.1));
         sections.add(new Section(0.2));
-        sections.add(new Section(0.3));
-        sections.add(new Section(0.4));
-        sections.add(new Section(0.5));
         sections.add(new Section(50));
         this.input_queue=input_queue;
         this.output_queue=output_queue;
@@ -296,12 +298,12 @@ public class Serwer_API extends javax.swing.JFrame {
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
-        jTextArea1.setText(jTextArea1.getText()+"Pytanie 6\n");
+    /*    jTextArea1.setText(jTextArea1.getText()+"Pytanie 6\n");
         step2=1;
         while(step2==1)
         {
             process_answer(10);
-        }
+        }*/
         jTextArea1.setText(jTextArea1.getText()+"Pytanie 7\n");
         step2=1;
         while(step2==1)
@@ -316,7 +318,7 @@ public class Serwer_API extends javax.swing.JFrame {
         }
         
         try
-            {sleep(10000);;}
+            {sleep(5000);}
         catch(Exception e){};
 
         //musi być dodane ID
@@ -327,7 +329,7 @@ public class Serwer_API extends javax.swing.JFrame {
             try
               {
                 sending=(clients.get(i).ID+":");
-                sending+=Integer.toString(clients.get(i).grade1+clients.get(i).grade2);
+                sending+=Double.toString(clients.get(i).grade1+clients.get(i).grade2);
                 output_queue.put(sending);
               }
             catch(Exception e){};
@@ -398,12 +400,29 @@ public class Serwer_API extends javax.swing.JFrame {
         quotes.add(new Quote_price("SunPower","SPWR","https://www.nasdaq.com/symbol/SPWR/historical","https://www.nasdaq.com/symbol/SPWR/real-time"));
         quotes.add(new Quote_price("General Motors","GM","https://www.nasdaq.com/symbol/gm/historical","https://www.nasdaq.com/symbol/gm/real-time"));
         quotes.add(new Quote_price("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
-        for(int i=0; i<quotes.size();++i)
-        {
-            System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
-            quotes.get(i).update_value();
-            jTextArea1.setText(jTextArea1.getText()+quotes.get(i).get_name()+ " "+quotes.get(i).current_price+"\n");
-        }
+        
+        final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
+
+                @Override
+                protected Boolean doInBackground() throws Exception {
+
+                    for(int i=0; i<quotes.size();++i)
+                    {
+                        System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
+                        quotes.get(i).update_value();
+                        jTextArea1.setText(jTextArea1.getText()+quotes.get(i).get_name()+ " "+quotes.get(i).current_price+"\n");
+                    }
+                    return true;
+                }
+
+                // Can safely update the GUI from this method.
+                @Override
+                protected void done() {
+                
+ 
+                }
+                };  
+                worker1.execute();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -428,6 +447,7 @@ public class Serwer_API extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -535,6 +555,13 @@ public class Serwer_API extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jButton1.setText("Liczba uczestników -1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -553,7 +580,8 @@ public class Serwer_API extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                     .addComponent(jTextField2)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,10 +592,12 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -643,6 +673,11 @@ public class Serwer_API extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        client_count-=1;
+        jTextField1.setText(Integer.toString(client_count));
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     public void grade_answers()
     {
@@ -668,10 +703,8 @@ public class Serwer_API extends javax.swing.JFrame {
                     if(answer>sections.get(counter).min&&answer<sections.get(counter).max)
                         break;
                 }
-                if(Math.abs(section-counter)<1)
-                    clients.get(i).grade1=2;
-                else if(Math.abs(section-counter)<2)
-                    clients.get(i).grade1=1;
+                if(section==counter)
+                    clients.get(i).grade1=(1.5-counter*0.5);
                 else
                     clients.get(i).grade1=0;
             }
@@ -683,16 +716,16 @@ public class Serwer_API extends javax.swing.JFrame {
             int difference;
             for(int i=0; i<clients.size();++i)
             {
-                position=Integer.parseInt(clients.get(i).answers.get(9));
+                position=Integer.parseInt(clients.get(i).answers.get(8));
                 reality=i+1;
                 difference=Math.abs(position-reality);
                 clients.get(i).answers.add(Double.toString(clients.get(i).income));
                 clients.get(i).answers.add(Integer.toString(reality));
-                for(int j=0; j<5;++j)
+                for(int j=0; j<4;++j)
                 {
                     if(difference==j)
                     {
-                       clients.get(i).grade2=(5-j);
+                       clients.get(i).grade2=(2-0.5*j);
                        if((clients.get(i).grade2+clients.get(i).grade1)<2)
                        {
                            clients.get(i).grade2=1;
@@ -716,14 +749,8 @@ public class Serwer_API extends javax.swing.JFrame {
             return 1;
         else if(answer.equals("[11-20%]"))
             return 2;
-        else if(answer.equals("[21-30%]"))
-            return 3;
-        else if(answer.equals("[31-40%]"))
-            return 4;
-        else if(answer.equals("[41-50%]"))
-            return 5;
         else if(answer.equals("[more than 50%]"))
-            return 6;
+            return 3;
         else
             return 0;
     }
@@ -731,6 +758,7 @@ public class Serwer_API extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

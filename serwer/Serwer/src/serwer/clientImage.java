@@ -17,8 +17,8 @@ public class clientImage {
     String name;
     String surname;
     double income;
-    int grade1=0;
-    int grade2=0;
+    double grade1=0;
+    double grade2=0;
     Vector<String> answers=new Vector<String>(); 
     Vector<Investment> invest=new Vector<Investment>();
     public void set_ID(String data) throws Exception
