@@ -28,7 +28,7 @@ public class ClientSide
         DataOutputStream out;
         InputStream inFromServer;
         DataInputStream in;
-    double one_investment=100000;
+    double one_investment=10000;
     double max_invests=10;
     public int findAvaliable(String name,int first, int last)
     {
