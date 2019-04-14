@@ -46,8 +46,8 @@ public class Serwer_API extends javax.swing.JFrame {
     public Serwer_API(BlockingQueue<String> input_queue, BlockingQueue<String> output_queue,synchro syn) 
     {
         this.syn=syn;
-        sections.add(new Section(0.1));
-        sections.add(new Section(0.2));
+        sections.add(new Section(0.0526));
+        sections.add(new Section(0.0877));
         sections.add(new Section(50));
         this.input_queue=input_queue;
         this.output_queue=output_queue;
@@ -104,6 +104,12 @@ public class Serwer_API extends javax.swing.JFrame {
         int position;
             try
             {
+                if(counter==client_count)
+                {
+                    step2=0;
+                    counter=0;
+                    return;
+                }
                 System.out.println("Process answer: "+counter);
          
                     System.out.println("Coś jest w kolejce");
@@ -147,6 +153,12 @@ public class Serwer_API extends javax.swing.JFrame {
         int position;
             try
             {
+                    if(counter==client_count)
+                    {
+                        step2=0;
+                        counter=0;
+                        return;
+                    }
                     System.out.println("Process answer: "+counter);
                     System.out.println("Coś jest w kolejce");
                     temp=input_queue.take();
@@ -295,12 +307,14 @@ public class Serwer_API extends javax.swing.JFrame {
             catch(Exception e){
             e.printStackTrace();};
         }
+        write_data();
         jTextArea1.setText(jTextArea1.getText()+"Pytanie 5, giełdowe\n");
         step2=1;
         while(step2==1)
         {
             process_answer(9);
         }
+        write_data();
         for(int i=0; i<client_count;++i)
         {
             try
@@ -336,13 +350,16 @@ public class Serwer_API extends javax.swing.JFrame {
         //musi być dodane ID
         grade_answers();
         syn.queue_synchro2=1;
+        double number;
         for(int i=0; i<client_count;++i)
         {
             String sending="";
             try
               {
+                number=clients.get(i).grade1+clients.get(i).grade2;
+                number=Math.round(number*10)/10.0;
                 sending=(clients.get(i).ID+":");
-                sending+=Double.toString(clients.get(i).grade1+clients.get(i).grade2);
+                sending+=Double.toString(number);
                 System.out.println("Serwer api wysyła: "+sending);
                 output_queue.put(sending);
               }
@@ -751,17 +768,11 @@ public class Serwer_API extends javax.swing.JFrame {
                 difference=Math.abs(position-reality);
                 clients.get(i).answers.add(Double.toString(clients.get(i).income));
                 clients.get(i).answers.add(Integer.toString(reality));
-                for(int j=0; j<4;++j)
+                for(int j=0; j<10;++j)
                 {
                     if(difference==j)
                     {
-                       clients.get(i).grade2=(2-0.5*j);
-                       if((clients.get(i).grade2+clients.get(i).grade1)<2)
-                       {
-                           clients.get(i).grade2=1;
-                           clients.get(i).grade1=1;
-                       }
-                       break;
+                       clients.get(i).grade2=(2-0.2*j);
                     }
                 }
             }

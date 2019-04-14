@@ -42,8 +42,6 @@ public class Question4 extends javax.swing.JFrame {
                + "maksymalnie Twój błąd, czyli różnica\n"
                + "między podaną przez Ciebie liczbą,\n"
                + "a prawdziwą wartością?";
-       String odp1="Więcej";
-       String odp2="Mniej";
        wait_screen ws=new wait_screen();
        download_screen ds=new download_screen();
       
@@ -63,8 +61,8 @@ public class Question4 extends javax.swing.JFrame {
         jLabel6.setVisible(false);
         jLabel5.setVisible(false);
         jLabel2.setVisible(false);
-        jLabel6.setText("<html>Jestem pewien/pewna, że mój błąd nie<br> przekracza 10% wartości (jeśli to prawda, to otrzymasz 1.5 punktu)</html>");
-        jLabel5.setText("<html>Jestem pewien/pewna, że mój błąd nie<br> przekracza 20% wartości (jeśli to prawda, to otrzymasz 1 punkt)</html>");
+        jLabel6.setText("<html>Jestem pewien/pewna, że mój błąd nie<br> przekracza 150zł (jeśli to prawda, to otrzymasz 1.5 punktu)</html>");
+        jLabel5.setText("<html>Jestem pewien/pewna, że mój błąd nie<br> przekracza 250zł wartości (jeśli to prawda, to otrzymasz 1 punkt)</html>");
         jLabel2.setText("<html>Obawiam się, że mój błąd może<br> być bardzo duży (otrzymujesz 0.5 punktu)</html>");
         jCheckBox4.setVisible(false);
 
