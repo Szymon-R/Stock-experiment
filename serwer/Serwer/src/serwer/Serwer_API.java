@@ -39,14 +39,15 @@ public class Serwer_API extends javax.swing.JFrame {
     int counter=0;
     boolean protector1=true;
     DefaultTableModel model;
+    synchro syn;
     Vector<clientImage> clients=new Vector<clientImage>();
     Vector<Section> sections=new Vector<Section>();
     Vector<Quote_price> quotes=new Vector<Quote_price>();
-    public Serwer_API(BlockingQueue<String> input_queue, BlockingQueue<String> output_queue) 
+    public Serwer_API(BlockingQueue<String> input_queue, BlockingQueue<String> output_queue,synchro syn) 
     {
-
-        sections.add(new Section(0.1));
-        sections.add(new Section(0.2));
+        this.syn=syn;
+        sections.add(new Section(0.0526));
+        sections.add(new Section(0.0877));
         sections.add(new Section(50));
         this.input_queue=input_queue;
         this.output_queue=output_queue;
@@ -103,16 +104,22 @@ public class Serwer_API extends javax.swing.JFrame {
         int position;
             try
             {
-                if(!input_queue.isEmpty())
+                if(counter==client_count)
                 {
+                    step2=0;
+                    counter=0;
+                    return;
+                }
+                System.out.println("Process answer: "+counter);
+         
                     System.out.println("Coś jest w kolejce");
                     temp=input_queue.take();
                     System.out.println("pobrane z kolejki: "+temp);
                     row=find_row(subtract_ID(temp));
-                    position=find_client(subtract_ID(temp));
-                    System.out.println(get_answer(temp));
                     System.out.println("row: "+row);
+                    position=find_client(subtract_ID(temp));
                     System.out.println("position: "+position);
+                    System.out.println(get_answer(temp));
                     if(row==0||position==0)
                         System.out.println("Nie znaleziono ID");
                     else
@@ -128,11 +135,12 @@ public class Serwer_API extends javax.swing.JFrame {
                       ++counter;
                       if(counter==client_count)
                       {
+                          System.out.println("counter: "+counter);
                           counter=0;
                           step2=0;
                       }     
                     }
-                }
+                
                 Thread.sleep(100);
             }
             catch(Exception e){};
@@ -145,8 +153,13 @@ public class Serwer_API extends javax.swing.JFrame {
         int position;
             try
             {
-                if(!input_queue.isEmpty())
-                {
+                    if(counter==client_count)
+                    {
+                        step2=0;
+                        counter=0;
+                        return;
+                    }
+                    System.out.println("Process answer: "+counter);
                     System.out.println("Coś jest w kolejce");
                     temp=input_queue.take();
                     System.out.println("pobrane z kolejki: "+temp);
@@ -180,11 +193,12 @@ public class Serwer_API extends javax.swing.JFrame {
                       ++counter;
                       if(counter==client_count)
                       {
+                          System.out.println("counter: "+counter);
                           counter=0;
                           step2=0;
                       }     
                     }
-                }
+                
                 Thread.sleep(100);
             }
             catch(Exception e){};
@@ -247,7 +261,9 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             try
               {output_queue.put("GOGO");}
-            catch(Exception e){};
+            catch(Exception e){
+            e.printStackTrace();
+            };
         }
         jTextArea1.setText(jTextArea1.getText()+"Pytanie 2\n");
         step2=1;
@@ -260,7 +276,9 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             try
               {output_queue.put("GOGO");}
-            catch(Exception e){};
+            catch(Exception e){
+            e.printStackTrace();
+            };
         }
         jTextArea1.setText(jTextArea1.getText()+"Pytanie 3\n");
         step2=1;
@@ -272,7 +290,9 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             try
               {output_queue.put("GOGO");}
-            catch(Exception e){};
+            catch(Exception e){
+            e.printStackTrace();
+            };
         }
         jTextArea1.setText(jTextArea1.getText()+"Pytanie 4\n");
         step2=1;
@@ -284,19 +304,23 @@ public class Serwer_API extends javax.swing.JFrame {
         {
             try
               {output_queue.put("GOGO");}
-            catch(Exception e){};
+            catch(Exception e){
+            e.printStackTrace();};
         }
+        write_data();
         jTextArea1.setText(jTextArea1.getText()+"Pytanie 5, giełdowe\n");
         step2=1;
         while(step2==1)
         {
             process_answer(9);
         }
+        write_data();
         for(int i=0; i<client_count;++i)
         {
             try
               {output_queue.put("GOGO");}
-            catch(Exception e){};
+            catch(Exception e){
+            e.printStackTrace();};
         }
     /*    jTextArea1.setText(jTextArea1.getText()+"Pytanie 6\n");
         step2=1;
@@ -312,28 +336,39 @@ public class Serwer_API extends javax.swing.JFrame {
         }
          for(int i=0; i<client_count;++i)
         {
+            System.out.println("Sending GOGO");
             try
               {output_queue.put("GOGO");}
             catch(Exception e){};
         }
         
         try
-            {sleep(5000);}
+            {sleep(10000);}
         catch(Exception e){};
 
+        jTextArea1.setText(jTextArea1.getText()+"Pytanie 8\n");
         //musi być dodane ID
         grade_answers();
+        syn.queue_synchro2=1;
+        double number;
         for(int i=0; i<client_count;++i)
         {
             String sending="";
             try
               {
+                number=clients.get(i).grade1+clients.get(i).grade2;
+                number=Math.round(number*10)/10.0;
                 sending=(clients.get(i).ID+":");
-                sending+=Double.toString(clients.get(i).grade1+clients.get(i).grade2);
+                sending+=Double.toString(number);
+                System.out.println("Serwer api wysyła: "+sending);
                 output_queue.put(sending);
               }
-            catch(Exception e){};
+            catch(Exception e)
+            {
+            e.printStackTrace();
+            };
         }
+        syn.queue_synchro2=0;
         //rozsyłanie wyników
         
         }
@@ -369,7 +404,7 @@ public class Serwer_API extends javax.swing.JFrame {
                 out.write("\n");
                 for(int j=0; j<clients.get(i).answers.size();++j)
                 {
-                    System.out.println(clients.get(i).answers.get(j));
+                   // System.out.println(clients.get(i).answers.get(j));
                     out.write(clients.get(i).answers.get(j));
                     out.write("\t");
                 }
@@ -401,35 +436,21 @@ public class Serwer_API extends javax.swing.JFrame {
         quotes.add(new Quote_price("General Motors","GM","https://www.nasdaq.com/symbol/gm/historical","https://www.nasdaq.com/symbol/gm/real-time"));
         quotes.add(new Quote_price("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
         
-        final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
-
-                @Override
-                protected Boolean doInBackground() throws Exception {
-
                     for(int i=0; i<quotes.size();++i)
                     {
                         System.out.println("Pobiernie informacji o "+quotes.get(i).get_name());
                         quotes.get(i).update_value();
                         jTextArea1.setText(jTextArea1.getText()+quotes.get(i).get_name()+ " "+quotes.get(i).current_price+"\n");
                     }
-                    return true;
-                }
-
-                // Can safely update the GUI from this method.
-                @Override
-                protected void done() {
-                
- 
-                }
-                };  
-                worker1.execute();
-    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
+    }
     @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -635,11 +656,26 @@ public class Serwer_API extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        
         if(protector1)
-        {
+        {   
             System.out.println("Pobieranie kursów akcji");
             jTextArea1.setText(jTextArea1.getText()+"Pobieranie kursów akcji\n");
+            protector1=false;
+            final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
+
+            @Override
+            protected Boolean doInBackground() throws Exception {
+
+                    get_prices();
+                    return true;
+            }
+
+                // Can safely update the GUI from this method.
+                @Override
+                protected void done() {
+                    
+
             String temp="";
-            get_prices();
+            
             for(int i=0; i<clients.size();++i)
             {
                 clients.get(i).calculate_income(quotes);
@@ -649,6 +685,8 @@ public class Serwer_API extends javax.swing.JFrame {
                 }
 
             }
+            try{
+            syn.queue_synchro1=1;
             for(int i=0; i<clients.size();++i)
             {
                 try
@@ -660,9 +698,17 @@ public class Serwer_API extends javax.swing.JFrame {
                     System.out.println("Serwer api wysyła "+temp);
                     output_queue.put(temp);
                 }
-                catch(Exception e){};
+                catch(Exception e){
+                    e.printStackTrace();
+                };
             }
-            protector1=false;
+            System.out.println("syn.queue_synchro1=0");
+            syn.queue_synchro1=0;
+            }
+            catch(Exception e){e.printStackTrace();};        
+                }
+                };  
+            worker1.execute();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -677,6 +723,7 @@ public class Serwer_API extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         client_count-=1;
         jTextField1.setText(Integer.toString(client_count));
+        input_queue.add("Dummy string");
     }//GEN-LAST:event_jButton1ActionPerformed
     
     public void grade_answers()
@@ -721,17 +768,11 @@ public class Serwer_API extends javax.swing.JFrame {
                 difference=Math.abs(position-reality);
                 clients.get(i).answers.add(Double.toString(clients.get(i).income));
                 clients.get(i).answers.add(Integer.toString(reality));
-                for(int j=0; j<4;++j)
+                for(int j=0; j<10;++j)
                 {
                     if(difference==j)
                     {
-                       clients.get(i).grade2=(2-0.5*j);
-                       if((clients.get(i).grade2+clients.get(i).grade1)<2)
-                       {
-                           clients.get(i).grade2=1;
-                           clients.get(i).grade1=1;
-                       }
-                       break;
+                       clients.get(i).grade2=(2-0.2*j);
                     }
                 }
             }

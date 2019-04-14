@@ -67,7 +67,7 @@ public class Results_screen extends javax.swing.JFrame {
                         + "participants. If you choose correctly,\n"
                         + "you will get 2 points, for every difference\n"
                         + "between your estimated position and\n"
-                        + "the real one you will get 0.5 point less\n"
+                        + "the real one you will get 0.2 point less\n"
                         + "(You can get from 2 to 0 points).");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);

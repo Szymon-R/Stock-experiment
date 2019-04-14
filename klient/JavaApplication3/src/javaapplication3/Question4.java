@@ -57,8 +57,8 @@ public class Question4 extends javax.swing.JFrame {
        //jCheckBox9.setText(" I'm sure my mistake is less than 10% \nof the value (if true, you'll get 1.5 points)");
        // jCheckBox6.setText("I'm sure my mistake is less than 20% of the value (if true, you'll get 1 point)");
        // jCheckBox4.setText("I'm afraid my mistake can be very big (you'll get 0.5 points)");
-        jLabel2.setText("<html> I'm sure my mistake is less than 10% <br>of the value (if true, you'll get 1.5 points)</html> ");
-        jLabel5.setText("<html> I'm sure my mistake is less than 20% <br>of the value (if true, you'll get 1 point)</html> ");
+        jLabel2.setText("<html> I'm sure my mistake is less 150zł <br>of the value (if true, you'll get 1.5 points)</html> ");
+        jLabel5.setText("<html> I'm sure my mistake is less 250zł <br>of the value (if true, you'll get 1 point)</html> ");
         jLabel6.setText("<html> I'm afraid my mistake can be very big <br>(you'll get 0.5 points)</html> ");
         jCheckBox4.setVisible(false);
 
