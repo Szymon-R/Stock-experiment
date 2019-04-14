@@ -63,8 +63,8 @@ public class Results_screen extends javax.swing.JFrame {
                 client_count=Integer.parseInt(temp);
                 jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+" uczestników\n"
                         + "zająłeś. Za poprawne podanie zajętego przez\n"
-                        + "Ciebie miejsca otrzymasz 5 punktów, za każdą\n"
-                        + "różnicę miejsca jeden punkt mnie.");
+                        + "Ciebie miejsca otrzymasz 2 punktów, za\n"
+                        + " każdą różnicę miejsca 0.5 punktu mniej.");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);
                 jComboBox1.setVisible(true);

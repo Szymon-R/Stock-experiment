@@ -23,11 +23,11 @@ import org.jfree.io.IOUtils;
  */
 public class ClientSide 
 {
-    Socket client;
-    OutputStream outToServer;
-    DataOutputStream out;
-    InputStream inFromServer;
-    DataInputStream in;
+        Socket client;
+        OutputStream outToServer;
+        DataOutputStream out;
+        InputStream inFromServer;
+        DataInputStream in;
     double one_investment=100000;
     double max_invests=10;
     public int findAvaliable(String name,int first, int last)

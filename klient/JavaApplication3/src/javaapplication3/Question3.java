@@ -141,7 +141,7 @@ public class Question3 extends javax.swing.JFrame {
         jTextArea1.setBorder(null);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel1.setText("Wpisz kwotę:");
+        jLabel1.setText("Wpisz kwotę w zł:");
 
         jCheckBox3.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N

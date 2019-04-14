@@ -26,15 +26,17 @@ public class Serwer {
   private static Socket clientSocket = null;
 
   // This chat server can accept up to maxClientsCount clients' connections.
-  private static final int maxClientsCount = 50;
+  private static final int maxClientsCount = 80;
   private static final clientThread[] clients = new clientThread[maxClientsCount];
-  
+ 
   public static void main(String args[]) {
-    BlockingQueue<String> MOSI= new LinkedBlockingQueue<String>(50);
-    BlockingQueue<String> MISO= new LinkedBlockingQueue<String>(50);
-    
+    BlockingQueue<String> MOSI= new LinkedBlockingQueue<String>(maxClientsCount);
+    BlockingQueue<String> MISO= new LinkedBlockingQueue<String>(maxClientsCount);
+ 
+    Semaphore s = new Semaphore(1);
     System.out.println("Starting Server API");
-    Serwer_API SA1=new Serwer_API(MISO,MOSI);
+    synchro syn=new synchro();
+    Serwer_API SA1=new Serwer_API(MISO,MOSI,syn);
     
     SA1.addWindowListener(new WindowAdapter() 
     {
@@ -76,7 +78,7 @@ public class Serwer {
         int i = 0;
         for (i = 0; i < maxClientsCount; i++) {
           if (clients[i] == null) {
-            (clients[i] = new clientThread(clientSocket, clients,Integer.toString(i+1),MOSI,MISO)).start();
+            (clients[i] = new clientThread(clientSocket, clients,Integer.toString(i+1),MOSI,MISO,syn)).start();
             break;
           }
         }
@@ -112,14 +114,17 @@ class clientThread extends Thread {
   private Socket clientSocket = null;
   private final clientThread[] clients;
   private int maxClientsCount;
+  BlockingQueue<String> copy;
   private String ID;
   BlockingQueue<String> input_queue;
   BlockingQueue<String> output_queue;
-  
-  public clientThread(Socket clientSocket, clientThread[] clients, String ID,BlockingQueue<String> input_queue,BlockingQueue<String> output_queue) {
+  synchro syn;
+  static Semaphore semaphore = new Semaphore(1);
+  public clientThread(Socket clientSocket, clientThread[] clients, String ID,BlockingQueue<String> input_queue,BlockingQueue<String> output_queue,synchro syn) {
     this.clientSocket = clientSocket;
     this.clients = clients;
     this.ID=ID;
+    this.syn=syn;
     this.input_queue=input_queue;
     this.output_queue=output_queue;
     maxClientsCount = clients.length;
@@ -170,7 +175,6 @@ class clientThread extends Thread {
 //waiting for client to send name and surname
 
       output_queue.put(get_ID());
-           
       input_queue.take();
       
       System.out.println(ID+": Sending data");
@@ -264,6 +268,8 @@ class clientThread extends Thread {
                 break;
             }
       }*/
+   
+   
       input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
@@ -280,7 +286,7 @@ class clientThread extends Thread {
       input_queue.take();
       System.out.println(ID+": Sending data");
       while(!write_data(os,data));
-      System.out.println(ID+": Question9 start");
+   /*   System.out.println(ID+": Question9 start");
       while (true) 
       {
             if(is.available()!=0)
@@ -289,7 +295,7 @@ class clientThread extends Thread {
                 output_queue.put(ID+": "+is.readUTF());
                 break;
             }
-      }
+      }*/
  /*     while (true) 
       {    
             if(is.available()!=0)
@@ -300,36 +306,197 @@ class clientThread extends Thread {
             }
       }*/
     //Tu client czeka na pierwsze rezultaty
-     String temp;
+    /* String temp;
      System.out.println("Czekam na wiadomosc z API");
-     while(true)
-     {
-        temp=input_queue.take();
-        System.out.println("Z API przyszło "+temp);
-        if(substract_ID(temp).equals(ID))
-        {
-            while(!write_data(os,temp));
-            break;
-        }
-         System.out.println(substract_ID(temp)+" nie pasuje do "+ID);
-        input_queue.put(temp);
-         sleep(100);
-     }
 
-      System.out.println(ID+": Question10 start");
-      while (true) 
-      {    
-            if(is.available()!=0)
+         while(syn.queue_synchro1==1)
+         {
+             sleep(200);
+         }
+         
+        semaphore.acquire();
+        System.out.println("input_queue.size() is "+input_queue.size());
+        System.out.println("Pobieram");
+        for(int i=0;i<input_queue.size();++i)
+        {
+            temp=input_queue.take();
+            if(substract_ID(temp).equals(ID))
             {
-                System.out.println("Coś przyszło, wrzucam na kolejkę");
-                output_queue.put(ID+": "+is.readUTF());
+                System.out.println(ID+") znalazlem, wysylam "+temp);
+                while(!write_data(os,temp));
+                System.out.println("Zwalniam1");
+                semaphore.release();
                 break;
             }
-      }
-        input_queue.take();
-        System.out.println(ID+": Sending data");
+            else
+            {
+              System.out.println(substract_ID(temp)+" nie pasuje do "+ID);
+              input_queue.add(temp);
+            }
+        }
+        System.out.println("Zwalniam");
+        semaphore.release();
+        sleep(10000);*/
+    /*    String temp;
+     System.out.println("Czekam na wiadomosc z API");
+
+         while(syn.queue_synchro1==1)
+         {
+             sleep(200);
+         }
+         
+        System.out.println("input_queue.size() is "+input_queue.size());
+        System.out.println("Pobieram");
+        while(true)
+        {
+            temp=input_queue.take();
+            if(substract_ID(temp).equals(ID))
+            {
+                System.out.println(ID+") znalazlem, wysylam "+temp);
+                while(!write_data(os,temp));
+                System.out.println("Zwalniam1");
+                break;
+            }
+            else
+            {
+              System.out.println(substract_ID(temp)+" nie pasuje do "+ID);
+              input_queue.put(temp);
+            }
+        sleep(200);
+        }
+        System.out.println("Zwalniam");
+
+        sleep(3000);*/
+    
+     String temp;
+     System.out.println("Czekam na wiadomosc z API");
+
+         while(syn.queue_synchro1==1)
+         {
+             clientThread.sleep(200);
+         }
+         
+        
+        System.out.println("Pobieram");
+  
+        semaphore.acquire();
+        {
+            copy = new LinkedBlockingDeque<>(input_queue);
+        }
+        semaphore.release();
+        System.out.println(ID+") Copy size is: "+copy.size());
+        for(int i=0;i<maxClientsCount;++i)
+        {
+            temp=copy.take();
+             if(substract_ID(temp).equals(ID))
+            {
+                System.out.println(ID+") znalazlem, wysylam "+temp);
+                while(!write_data(os,temp));
+                System.out.println("Zwalniam1");
+                break;
+            }
+        }
+        semaphore.release();
+        clientThread.sleep(10000);
+        System.out.println("Czyszczenie input_queue");
+        input_queue.clear();
+        
+        
+        System.out.println(ID+": Question10 start");
+        while (true) 
+        {    
+              if(is.available()!=0)
+              {
+                  System.out.println("Coś przyszło, wrzucam na kolejkę");
+                  output_queue.put(ID+": "+is.readUTF());
+                  break;
+              }
+        }
+       String temp3;
+        temp3=input_queue.take();
+        System.out.println("Wziete z kolejki:"+temp3);
         while(!write_data(os,data));
+        System.out.println(ID+": SENDING DATA!!!!");
         sleep(10000);
+        
+        
+        
+        System.out.println("Czekam na wiadomosc z API");
+         while(syn.queue_synchro2==1)
+         {
+             clientThread.sleep(200);
+         }
+         
+        
+        System.out.println("Pobieram");
+  
+        semaphore.acquire();
+        {
+            copy.clear();
+            copy = new LinkedBlockingDeque<>(input_queue);
+        }
+        semaphore.release();
+        System.out.println(ID+") Copy size is: "+copy.size());
+        for(int i=0;i<maxClientsCount;++i)
+        {
+            temp=copy.take();
+             if(substract_ID(temp).equals(ID))
+            {
+                System.out.println(ID+") znalazlem, wysylam "+temp);
+                while(!write_data(os,temp));
+                System.out.println("Zwalniam1");
+                break;
+            }
+        }
+        clientThread.sleep(10000);
+        System.out.println("Czyszczenie input_queue");
+        input_queue.clear();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+
        System.out.println("Czekam na wiadomosc z API");
        while(true)
        {
@@ -344,7 +511,6 @@ class clientThread extends Thread {
           input_queue.put(temp);
            sleep(100);
        }
-      
   
       is.close();
       os.close();

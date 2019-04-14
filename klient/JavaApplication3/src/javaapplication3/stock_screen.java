@@ -81,7 +81,7 @@ public class stock_screen extends javax.swing.JFrame {
         init_update();
         run_update();
         display_plot();
-        run_timer(20);
+        run_timer(20*60);
     }
 
     /**
@@ -542,24 +542,24 @@ public void wait_for_response()
         @Override
         protected void done() {
             ws.dispose();
-            Question5 qs5=new Question5(ClientSide1);
-            qs5.addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent we) {
-                    int result = JOptionPane.showConfirmDialog(qs5, "Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie", JOptionPane.YES_NO_OPTION);
+                Results_screen rs=new Results_screen(ClientSide1);
+                rs.addWindowListener(new WindowAdapter() 
+                {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(rs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
                     if(result == JOptionPane.YES_OPTION){
-                    JOptionPane.showMessageDialog(qs5, "Nie można teraz wyłączyć progamu.");
-                    qs5.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    JOptionPane.showMessageDialog(rs, "Nie można teraz wyłączyć progamu.");
+                    rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
-                     else if (result == JOptionPane.NO_OPTION) {
-                        
-                        qs5.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
-                }
-            });
+                });
             dispose();
             setVisible(false);
-            qs5.setLocationRelativeTo(null);
-            qs5.setVisible(true);
+            rs.setLocationRelativeTo(null);
+            rs.setVisible(true);;
         }
 
     };

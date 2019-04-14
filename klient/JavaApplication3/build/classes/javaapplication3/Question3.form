@@ -229,7 +229,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Wpisz kwot&#x119;:"/>
+            <Property name="text" type="java.lang.String" value="Wpisz kwot&#x119; w z&#x142;:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBox3">
