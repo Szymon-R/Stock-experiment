@@ -308,51 +308,31 @@ public class Question3 extends javax.swing.JFrame {
                     text=jCheckBox3.getText();
                 if(jCheckBox2.isSelected())
                     text=jCheckBox2.getText();
-                System.out.println("sending "+'@'+jTextField1.getText()+'#'+'@'+text+'#');
-                while(!ClientSide1.send_data('@'+jTextField1.getText()+'#'+'@'+text+'#'));
-                 
-                final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
+                System.out.println("sending "+jTextField1.getText()+' '+text);
 
-                @Override
-                protected Boolean doInBackground() throws Exception {
-
-                    String lala;
-                    lala=ClientSide1.read_data(1000);
-                    System.out.println("Received: "+lala);
-                    return true;
-                }
-
-                // Can safely update the GUI from this method.
-                @Override
-                protected void done() {
-                    ws.dispose();
-                    dispose();
-                    Question4  q4=new Question4(ClientSide1);
-                    q4.addWindowListener(new WindowAdapter() 
-                    {
+                while(!ClientSide1.send_data("*5"+'@'+jTextField1.getText()+'#'));
+                while(!ClientSide1.send_data("*6"+'@'+text+'#'));
+                
+                dispose();
+                Question4 q4=new Question4(ClientSide1);
+                q4.setLocationRelativeTo(null);
+                q4.setVisible(true); 
+                q4.addWindowListener(new WindowAdapter() 
+                {
                     public void windowClosing(WindowEvent we) 
                     {
                     int result = JOptionPane.showConfirmDialog(q4,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION){
-                    JOptionPane.showMessageDialog(q4, "Nie można teraz wyłączyć progamu.");
-                    q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                    }
+                    if(result == JOptionPane.YES_OPTION)
+                        q4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     else if(result == JOptionPane.NO_OPTION)
                         q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    else if(result==JOptionPane.CLOSED_OPTION)
+                        q4.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
-                    });
-                    q4.setLocationRelativeTo(null);
-                    q4.setVisible(true);
-                }
-                };  
-                this.setEnabled(false);
-                ws.setLocationRelativeTo(this);
-                ws.setVisible(true);
-                worker1.execute();
-
+                });
             }
         }
-        }
+    }
         
 
     }//GEN-LAST:event_jButton1ActionPerformed

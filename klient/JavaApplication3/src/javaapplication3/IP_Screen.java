@@ -172,12 +172,12 @@ public class IP_Screen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             
-    if(!ClientSide1.validIP(jTextField3.getText()))
+   /* if(!ClientSide1.validIP(jTextField3.getText()))
     {
         JOptionPane.showMessageDialog(this, "Wpisane IP ma nieprawidłową formę.","Problem z IP",JOptionPane.WARNING_MESSAGE);
         return;
-    }
-    else
+    }*/
+    //else
     {
         //System.out.println(Integer.toString(ClientSide1.findAvaliable(jTextField3.getText(), 6000, 6100)));
     /*    try{System.out.println(InetAddress.getByName("localhost")); 
@@ -194,54 +194,34 @@ public class IP_Screen extends javax.swing.JFrame {
         }
         else
            
-        if(ClientSide1.connect(temp, jTextField3.getText())!=1)
-      // if(ClientSide1.connect(temp, "10.102.37.150")!=1)
+        //if(ClientSide1.connect(temp, jTextField3.getText())!=1)
+       if(ClientSide1.connect(temp, "192.168.1.6")!=1)
         {
             JOptionPane.showMessageDialog(this,"Nie udało się połączyć z serwerem","Nieudane połączenie",JOptionPane.WARNING_MESSAGE);
             System.out.println("Nie udało się połączyć z serwerem");
             return;
         }
 
-        
-        final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
-            
-        @Override
-        protected Boolean doInBackground() throws Exception {
-            
-            String lala;
-            lala=ClientSide1.read_data(1000);
-            return true;
-        }
 
-        // Can safely update the GUI from this method.
-        @Override
-        protected void done() 
-        {
-            ws.dispose();
+
             dispose();
-            Gender_screen gs=new Gender_screen(ClientSide1);
-                gs.addWindowListener(new WindowAdapter() 
+            name_screen ns=new name_screen(ClientSide1);
+            ns.setLocationRelativeTo(null);
+            ns.setVisible(true);
+                ns.addWindowListener(new WindowAdapter() 
                 {
                     public void windowClosing(WindowEvent we) 
                     {
-                    int result = JOptionPane.showConfirmDialog(gs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION){
-                    JOptionPane.showMessageDialog(gs, "Nie można teraz wyłączyć progamu.");
-                    gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                    }
-                 //       gs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    int result = JOptionPane.showConfirmDialog(ns,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        ns.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     else if(result == JOptionPane.NO_OPTION)
-                        gs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                        ns.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    else if(result==JOptionPane.CLOSED_OPTION)
+                        ns.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
-                });
-            gs.setLocationRelativeTo(null);
-            gs.setVisible(true);
-        }
-        };  
-        this.setEnabled(false);
-        ws.setVisible(true);
-        ws.setLocationRelativeTo(this);
-        worker1.execute();
+                });    
+
     }    
 
     }//GEN-LAST:event_jButton1ActionPerformed

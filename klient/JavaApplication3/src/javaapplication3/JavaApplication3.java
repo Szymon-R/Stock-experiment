@@ -56,6 +56,8 @@ public class JavaApplication3 {
                         ip.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     else if(result == JOptionPane.NO_OPTION)
                         ip.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    else if(result==JOptionPane.CLOSED_OPTION)
+                        ip.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
                 });
             }

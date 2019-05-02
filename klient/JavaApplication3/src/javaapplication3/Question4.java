@@ -384,7 +384,10 @@ public class Question4 extends javax.swing.JFrame {
 
                     
                     System.out.println("sending "+'@'+jTextField1.getText()+'#'+'@'+text+'#');
-                    while(!ClientSide1.send_data('@'+jTextField1.getText()+'#'+'@'+text+'#'));
+
+                    while(!ClientSide1.send_data("*7"+'@'+jTextField1.getText()+'#'));
+                    while(!ClientSide1.send_data("*8"+'@'+text+'#'));
+                
 
                     final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
 
@@ -392,33 +395,36 @@ public class Question4 extends javax.swing.JFrame {
                         protected Boolean doInBackground() throws Exception {
                             ws.setVisible(true);
                             String lala;
-                            lala=ClientSide1.read_data(1000);
-                            ds.setVisible(true);
-                            
-                            return true;
+                            while(true)
+                            {
+                                lala=ClientSide1.read_data(1000);
+                                if(lala.equals("GoStock"))
+                                {
+                                    ds.setVisible(true);
+                                    return true;
+                                }
+                            }
                         }
 
                         // Can safely update the GUI from this method.
                         @Override
                         protected void done() {
                             ws.dispose();
-                          
-
                             stock_screen ss=new stock_screen(ClientSide1);
                             
-                            ss.addWindowListener(new WindowAdapter() 
+                        ss.addWindowListener(new WindowAdapter() 
+                        {
+                            public void windowClosing(WindowEvent we) 
                             {
-                                public void windowClosing(WindowEvent we) 
-                                {
-                                int result = JOptionPane.showConfirmDialog(ss,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                                if(result == JOptionPane.YES_OPTION){
-                                JOptionPane.showMessageDialog(ss, "Nie można teraz wyłączyć progamu.");
+                            int result = JOptionPane.showConfirmDialog(ss,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                            if(result == JOptionPane.YES_OPTION)
+                                ss.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            else if(result == JOptionPane.NO_OPTION)
                                 ss.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                                }
-                                else if(result == JOptionPane.NO_OPTION)
-                                    ss.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                                }
-                            });
+                            else if(result==JOptionPane.CLOSED_OPTION)
+                                ss.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                            }
+                        });    
                             ds.dispose();
                             dispose();
                             ss.setLocationRelativeTo(null);
@@ -429,7 +435,6 @@ public class Question4 extends javax.swing.JFrame {
                     ws.setLocationRelativeTo(this);
                     ws.setVisible(true);
                     worker1.execute();
-
                 }
             }
         }

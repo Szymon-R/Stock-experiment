@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +34,7 @@ import javax.swing.JFrame;
  */
 public class stock_screen extends javax.swing.JFrame {
 
-    List<Quote> quotes;
+    ArrayList<Quote> quotes;
     int current = 0;
     double one_investment;
     double max_invests;
@@ -41,7 +42,9 @@ public class stock_screen extends javax.swing.JFrame {
     ClientSide ClientSide1;
     boolean stop = false;
     boolean flag = true;
+    Timer update_timer;
     Timer t;
+    data_base data_b=new data_base();
     wait_screen ws=new wait_screen();
     String pytanie = "Masz do wyboru 15 spółek notowanych na\n"
             + "amerykańskiej giełdzie. Dla każdej spółki\n"
@@ -58,22 +61,70 @@ public class stock_screen extends javax.swing.JFrame {
         
         quotes = new ArrayList<Quote> ();
         quotes.add(new Quote("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/historical","https://www.nasdaq.com/symbol/ko/real-time"));
-        quotes.add(new Quote("Google","GOOG","https://www.nasdaq.com/symbol/goog/historical","https://www.nasdaq.com/symbol/goog/real-time"));
-        quotes.add(new Quote("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/historical","https://www.nasdaq.com/symbol/aapl/real-time")); 
-        quotes.add(new Quote("Facebook","FB","https://www.nasdaq.com/symbol/fb/historical","https://www.nasdaq.com/symbol/fb/real-time"));
-        quotes.add(new Quote("Tesla","TSLA","https://www.nasdaq.com/symbol/TSLA/historical","https://www.nasdaq.com/symbol/TSLA/real-time"));
-        quotes.add(new Quote("Amazon","AMZN","https://www.nasdaq.com/symbol/AMZN/historical","https://www.nasdaq.com/symbol/AMZN/real-time"));
-        quotes.add(new Quote("Microsoft","MSFT","https://www.nasdaq.com/symbol/MSFT/historical","https://www.nasdaq.com/symbol/MSFT/real-time"));
-        quotes.add(new Quote("Intel","INTC","https://www.nasdaq.com/symbol/INTC/historical","https://www.nasdaq.com/symbol/INTC/real-time"));
-        quotes.add(new Quote("Groupon","GRPN","https://www.nasdaq.com/symbol/GRPN/historical","https://www.nasdaq.com/symbol/GRPN/real-time"));
-        quotes.add(new Quote("EBay","EBAY","https://www.nasdaq.com/symbol/EBAY/historical","https://www.nasdaq.com/symbol/EBAY/real-time"));
-        quotes.add(new Quote("Starbucks","SBUX","https://www.nasdaq.com/symbol/SBUX/historical","https://www.nasdaq.com/symbol/SBUX/real-time"));
-        quotes.add(new Quote("GoPro","GRPRO","https://www.nasdaq.com/symbol/GPRO/historical","https://www.nasdaq.com/symbol/GPRO/real-time"));
-        quotes.add(new Quote("SunPower","SPWR","https://www.nasdaq.com/symbol/SPWR/historical","https://www.nasdaq.com/symbol/SPWR/real-time"));
-        quotes.add(new Quote("General Motors","GM","https://www.nasdaq.com/symbol/gm/historical","https://www.nasdaq.com/symbol/gm/real-time"));
-        quotes.add(new Quote("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
-           
+        data_b.create_data_CocaCola(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_cocacola(quotes.get(quotes.size()-1).quotes);
         
+        quotes.add(new Quote("Google","GOOG","https://www.nasdaq.com/symbol/goog/historical","https://www.nasdaq.com/symbol/goog/real-time"));
+        data_b.create_data_google(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_google(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/historical","https://www.nasdaq.com/symbol/aapl/real-time")); 
+        data_b.create_data_apple(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_apple(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Facebook","FB","https://www.nasdaq.com/symbol/fb/historical","https://www.nasdaq.com/symbol/fb/real-time"));
+        data_b.create_data_facebook(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_facebook(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Tesla","TSLA","https://www.nasdaq.com/symbol/TSLA/historical","https://www.nasdaq.com/symbol/TSLA/real-time"));
+        data_b.create_data_tesla(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_tesla(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Amazon","AMZN","https://www.nasdaq.com/symbol/AMZN/historical","https://www.nasdaq.com/symbol/AMZN/real-time"));
+        data_b.create_data_amazon(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_amazon(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Microsoft","MSFT","https://www.nasdaq.com/symbol/MSFT/historical","https://www.nasdaq.com/symbol/MSFT/real-time"));
+        data_b.create_data_microsoft(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_microsoft(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Intel","INTC","https://www.nasdaq.com/symbol/INTC/historical","https://www.nasdaq.com/symbol/INTC/real-time"));
+        data_b.create_data_intel(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_intel(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Groupon","GRPN","https://www.nasdaq.com/symbol/GRPN/historical","https://www.nasdaq.com/symbol/GRPN/real-time"));
+        data_b.create_data_groupon(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_groupon(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("EBay","EBAY","https://www.nasdaq.com/symbol/EBAY/historical","https://www.nasdaq.com/symbol/EBAY/real-time"));
+        data_b.create_data_ebay(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_ebay(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Starbucks","SBUX","https://www.nasdaq.com/symbol/SBUX/historical","https://www.nasdaq.com/symbol/SBUX/real-time"));
+        data_b.create_data_starbucks(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_starbucks(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("GoPro","GRPRO","https://www.nasdaq.com/symbol/GPRO/historical","https://www.nasdaq.com/symbol/GPRO/real-time"));
+        data_b.create_data_gopro(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_gopro(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("SunPower","SPWR","https://www.nasdaq.com/symbol/SPWR/historical","https://www.nasdaq.com/symbol/SPWR/real-time"));
+        data_b.create_data_sunpower(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_sunpower(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("General Motors","GM","https://www.nasdaq.com/symbol/gm/historical","https://www.nasdaq.com/symbol/gm/real-time"));
+        data_b.create_data_generalmotors(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_generalmotors(quotes.get(quotes.size()-1).quotes);
+        
+        quotes.add(new Quote("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
+        data_b.create_data_proctergamble(quotes.get(quotes.size()-1).prices);
+        data_b.historical_data_proctergamble(quotes.get(quotes.size()-1).quotes);
+        
+        
+
+           
+        update_timer=new Timer();
+        t=new Timer();
         initComponents();
         jTextArea1.setText(pytanie);
         jTextField3.setText("Pozostałe środki: "+max_invests*one_investment+"USD");
@@ -364,19 +415,6 @@ public class stock_screen extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
             if(n==0)
             {
-                this.setEnabled(false);                             
-                    String sending="@";
-                    Quote single;
-                    for(int i=0; i<quotes.size();++i)
-                    {
-                        single=quotes.get(i);
-                        if(single.invested!=0)
-                        {
-                            sending+=","+single.name+","+single.current_price+","+single.invested*one_investment+",;";
-                        }
-                    }
-                    sending+="#";
-                    ClientSide1.send_data(sending);
                     wait_for_response();
                     stop=true;
             }
@@ -388,61 +426,51 @@ public class stock_screen extends javax.swing.JFrame {
 
     public void run_update()
     {
-        final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
-        @Override
-        protected Boolean doInBackground() throws Exception {
-            while(!stop)
+            
+          TimerTask timerTask =new TimerTask()
             {
-                quotes.get(current).update_value();
-                jTextField1.setText(quotes.get(current).current_price);
-            }
-            return true;
-        }
-
-        // Can safely update the GUI from this method.
-        @Override
-        protected void done() {
-
-        }
-        };  
-        worker1.execute();
+               
+                int counter;
+                public void run()
+                {
+                    try
+                    {
+                         int current=jComboBox1.getSelectedIndex();
+                        jTextField1.setText(Double.toString(quotes.get(current).prices.get(counter)));
+                        quotes.get(current).current_price=Double.toString(quotes.get(current).prices.get(counter));
+                        ++counter;
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println(e);
+                    }
+                }
+            };
+          update_timer.schedule(timerTask,1000,1000);
+        
+        
     }
     
     public void init_update()
     {
         for(int i=0; i<quotes.size();++i)
         {
-            quotes.get(i).update_value();
+            quotes.get(i).current_price=Double.toString(quotes.get(current).prices.get(0));
         }
     }
     public void run_timer(int seconds)
     {
-        t=new Timer();
         TimerTask timerTask =new TimerTask()
         {
             int remaining=seconds;
             public void run()
             {
-                remaining-=1;
+            remaining-=1;
                // System.out.println(remaining);
-                jTextArea2.setText(Integer.toString(remaining));
-                if(remaining==0)
-                {
-                                
-                    String sending="@";
-                    Quote single;
-                    for(int i=0; i<quotes.size();++i)
-                    {
-                        single=quotes.get(i);
-                        if(single.invested!=0)
-                        {
-                            sending+=","+single.name+","+single.current_price+","+single.invested*one_investment+",;";
-                        }
-                    }
-                    sending+="#";
-                    stop=true;
-                    ClientSide1.send_data(sending);
-                    wait_for_response();
+            jTextArea2.setText(Integer.toString(remaining));
+            if(remaining==0)
+            {
+                wait_for_response();
             };
                 }
         };
@@ -456,7 +484,7 @@ void combo_box_init()
     for(int i=0; i<quotes.size();++i)
     {
         jComboBox1.addItem(quotes.get(i).get_name());
-        quotes.get(i).get_historical_data(quotes_number,1);
+       // quotes.get(i).get_historical_data(quotes_number,1);
     }
 }
 private void display_plot()
@@ -483,9 +511,10 @@ private void display_plot()
     {
         series.add(i,quotes.get(current).quotes.get(size-i-1).get_value());
         numbers.add(quotes.get(current).quotes.get(i).get_value());
-        dates[size-i-1]=quotes.get(current).quotes.get(i).get_date();
+        //dates[size-i-1]=quotes.get(current).quotes.get(i).get_date();
+        dates[size-i-1]=Integer.toString(i+1);
     }
-    SymbolAxis sa = new SymbolAxis("Data[mm/dd/yyyy]",dates);
+    SymbolAxis sa = new SymbolAxis("Dni temu",dates);
     
     XYSeriesCollection dataset = new XYSeriesCollection();
     dataset.addSeries(series);
@@ -493,7 +522,7 @@ private void display_plot()
     // Generate the graph
     JFreeChart chart = ChartFactory.createXYLineChart(
        quotes.get(current).get_name(), // Title
-       "Data", // x-axis Label
+       "Dni temu", // x-axis Label
        "Kurs akcji [USD]", // y-axis Label
        dataset, // Dataset
        PlotOrientation.VERTICAL, // Plot Orientation
@@ -505,7 +534,7 @@ private void display_plot()
     xyPlot.setDomainCrosshairVisible(true);
     xyPlot.setRangeCrosshairVisible(true);
     xyPlot.setDomainAxis(sa);
-    sa.setAttributedLabel("Data [mm/dd/yyyy]");
+    sa.setAttributedLabel("Dni temu");
     
     
     
@@ -527,46 +556,40 @@ private void display_plot()
 }
 public void wait_for_response()
 {
-    final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
-
-    @Override
-    protected Boolean doInBackground() throws Exception {
-        t.cancel();
-        String lala;
-        lala=ClientSide1.read_data(1000);
-        System.out.println("Z serwera przyszło "+lala);
-        return true;
-    }
-
-        // Can safely update the GUI from this method.
-        @Override
-        protected void done() {
-            ws.dispose();
-                Results_screen rs=new Results_screen(ClientSide1);
-                rs.addWindowListener(new WindowAdapter() 
-                {
-                    public void windowClosing(WindowEvent we) 
-                    {
-                    int result = JOptionPane.showConfirmDialog(rs,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
-                    if(result == JOptionPane.YES_OPTION){
-                    JOptionPane.showMessageDialog(rs, "Nie można teraz wyłączyć progamu.");
-                    rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                    }
-                    else if(result == JOptionPane.NO_OPTION)
-                        rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                    }
-                });
-            dispose();
-            setVisible(false);
-            rs.setLocationRelativeTo(null);
-            rs.setVisible(true);;
-        }
-
-    };
     this.setEnabled(false);
-    ws.setLocationRelativeTo(this);
-    ws.setVisible(true);
-    worker1.execute();
+    String sending = "*9@";
+    Quote single;
+    for (int i = 0; i < quotes.size(); ++i) 
+    {
+        single = quotes.get(i);
+        if (single.invested != 0) 
+        {
+            sending += "," + single.name + "," + single.current_price + "," + single.invested * one_investment + ",;";
+        }
+    }
+    sending += "#";
+    ClientSide1.send_data(sending);
+    dispose();
+    Results_screen rs = new Results_screen(ClientSide1);
+    rs.setLocationRelativeTo(null);
+    rs.setVisible(true);
+    rs.addWindowListener(new WindowAdapter() 
+    {
+        public void windowClosing(WindowEvent we) 
+        {
+            int result = JOptionPane.showConfirmDialog(rs, "Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) 
+            {
+                rs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            } 
+            else if (result == JOptionPane.NO_OPTION) 
+            {
+                rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+            else if(result==JOptionPane.CLOSED_OPTION)
+                rs.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    });        
 }
             
     /**

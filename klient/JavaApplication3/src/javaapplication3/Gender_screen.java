@@ -192,7 +192,7 @@ public class Gender_screen extends javax.swing.JFrame {
                 text=jCheckBox2.getText();
 
                 
-                Stock_question sq= new Stock_question(text,ClientSide1);
+                Stock_question sq= new Stock_question(ClientSide1);
                 sq.addWindowListener(new WindowAdapter() 
                 {
                     public void windowClosing(WindowEvent we) 

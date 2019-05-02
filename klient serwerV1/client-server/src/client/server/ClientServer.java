@@ -6,43 +6,37 @@
 package client.server;
 import java.net.*;
 import java.io.*;
+import java.util.Random;
+import java.util.Vector;
 /**
  *
  * @author Szymon
  */public class ClientServer extends Thread {
-   private ServerSocket serverSocket;
+
    
    public ClientServer(int port) throws IOException {
-      serverSocket = new ServerSocket(port);
+
       //serverSocket.setSoTimeout(10000);
    }
-
+   int size=30000;
    public void run() {
-       String input;
-      while(true) {
-         try {
-            System.out.println("Waiting for client on port " + 
-               serverSocket.getLocalPort() + "...");
-            Socket server = serverSocket.accept();
-            
-            System.out.println("Just connected to " + server.getRemoteSocketAddress());
-            DataInputStream in = new DataInputStream(server.getInputStream());
-            
-            //System.out.println(in.readUTF());
-            DataOutputStream out = new DataOutputStream(server.getOutputStream());
-            out.writeUTF("Looks like we are connected");
-            input=in.readUTF();
-            System.out.println(input);
-            server.close();
-            
-         } catch (SocketTimeoutException s) {
-            System.out.println("Socket timed out!");
-            break;
-         } catch (IOException e) {
-            e.printStackTrace();
-            break;
-         }
-      }
+    Vector<Double> liczby=new Vector<Double>();
+    for(int i=0; i<size;++i)
+    {
+        liczby.add((double)i);
+    }
+     Random rand = new Random();
+    while(true)
+    {
+        try
+        {
+       int n = rand.nextInt(size);
+       System.out.println(liczby.get(n));
+       this.wait(100);
+        }
+        catch(Exception e){};
+    }
+
    }
 
 

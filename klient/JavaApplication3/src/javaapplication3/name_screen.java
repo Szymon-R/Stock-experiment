@@ -6,6 +6,9 @@
 package javaapplication3;
 
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
  *
@@ -13,8 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class name_screen extends javax.swing.JFrame {
 
-    IP_Screen IP_Screen1;
-    public name_screen() {
+    ClientSide ClientSide1;
+    public name_screen(ClientSide ClientSide1) {
+        this.ClientSide1= ClientSide1;
         initComponents();
         
     }
@@ -173,10 +177,24 @@ public class name_screen extends javax.swing.JFrame {
         }
         else
         {
-            IP_Screen1=new IP_Screen();
-            IP_Screen1.setLocationRelativeTo(null);
-            IP_Screen1.setVisible(true);
-            this.setEnabled(false);
+            while(!ClientSide1.send_data("*2"+'@'+imie+' '+nazwisko+'#'));
+            Stock_question sq= new Stock_question(ClientSide1);
+            dispose();
+            sq.setLocationRelativeTo(null);
+            sq.setVisible(true);
+                sq.addWindowListener(new WindowAdapter() 
+                {
+                    public void windowClosing(WindowEvent we) 
+                    {
+                    int result = JOptionPane.showConfirmDialog(sq,"Jesteś pewien, że chcesz zamknąc program?", "Potwierdzenie",JOptionPane.YES_NO_OPTION);
+                    if(result == JOptionPane.YES_OPTION)
+                        sq.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    else if(result == JOptionPane.NO_OPTION)
+                        sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    else if(result==JOptionPane.CLOSED_OPTION)
+                        sq.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                });
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

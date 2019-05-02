@@ -38,6 +38,7 @@ public class Results_screen extends javax.swing.JFrame {
             protected String doInBackground() throws Exception {
                 
                 String result=ClientSide1.read_data(1000);
+                System.out.println(result);
                 return result;
             }
 
@@ -261,22 +262,8 @@ public class Results_screen extends javax.swing.JFrame {
                 String sending;
                 sending=jComboBox1.getSelectedItem().toString();
                 System.out.println("sending "+sending);
-                while(!ClientSide1.send_data('@'+sending+'#'));
+                while(!ClientSide1.send_data("*10@"+sending+'#'));
 
-                final SwingWorker<Boolean, Void> worker1 =  new SwingWorker<Boolean, Void>() {
-
-                @Override
-                protected Boolean doInBackground() throws Exception {
-
-                    String lala;
-                    lala=ClientSide1.read_data(1000);
-                    System.out.println("Received: "+lala);
-                    return true;
-                }
-
-                // Can safely update the GUI from this method.
-                @Override
-                protected void done() {
                     ws.dispose();
                     dispose();
                     Last_screen  ls=new Last_screen(ClientSide1);
@@ -289,17 +276,15 @@ public class Results_screen extends javax.swing.JFrame {
                             ls.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         else if(result == JOptionPane.NO_OPTION)
                             ls.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                        else if(result==JOptionPane.CLOSED_OPTION)
+                            ls.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                         }
                     });
+                    dispose();
                     ls.setLocationRelativeTo(null);
                     ls.setVisible(true);
-                }
-                };  
-                this.setEnabled(false);
-                ws.setLocationRelativeTo(this);
-                ws.setVisible(true);
-                worker1.execute();
-            }
+              }
+            
         
         
         

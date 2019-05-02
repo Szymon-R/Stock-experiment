@@ -43,7 +43,9 @@ public class Last_screen extends javax.swing.JFrame {
                 catch(Exception e){};
                 int index=output.indexOf(":");
                 output=output.substring(index+1,output.length());
-                jTextField1.setText(jTextField1.getText()+output);
+                double temp=Double.parseDouble(output);
+                temp=Math.round(temp);
+                jTextField1.setText(jTextField1.getText()+Double.toString(temp));
             }
         };
         worker1.execute();

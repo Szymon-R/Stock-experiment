@@ -8,14 +8,21 @@ package javaapplication3;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
 
 /**
  *
@@ -24,7 +31,9 @@ import java.util.Date;
 public class Quote {
     String name;
     String symbol;
-    List<Single_item> quotes = new ArrayList<Single_item> ();
+    ArrayList<Single_item> quotes = new ArrayList<Single_item> ();
+    Vector<Double> prices=new Vector<Double>();
+    
     URL historical_url;
     URL update_url;
     String current_price;
@@ -199,7 +208,53 @@ public class Quote {
         {
             System.out.println("Error reading data from url");
         }
-    }        
+    }  
 
+    public void download_data()
+    {
+        System.out.println("Zapisywanie do pliku");
+        System.out.println();  
+        try
+        {
+            String file=name+".txt";
+            Writer out = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(name), "UTF-8"));
+            System.out.println("Otwarto plik");
+
+            Timer t=new Timer();
+            
+            TimerTask timerTask =new TimerTask()
+            {
+                int remaining=40*60;
+                public void run()
+                {
+                    try
+                    {
+                        System.out.println(name+" "+Integer.toString(remaining));
+                        remaining-=1;
+                        update_value();
+                        //prices.add(100.0);
+                        out.write("prices.add(");
+                        out.write(current_price);
+                        out.write(");\n");
+                        out.flush();
+                        if(remaining<=0)
+                        {
+                            out.close();
+                            t.cancel();
+                            return;
+                        }
+                    }
+                    catch(IOException e){System.out.println(e);};
+                }
+
+            
+            };
+            t.schedule(timerTask,3000,3000);
+        }
+              catch(IOException e){System.out.println(e);};
+    }
     
 }
+
+
