@@ -23,8 +23,8 @@ public class Question3 extends javax.swing.JFrame {
      * Creates new form Question3
      */
    String pytanie="Ile według ciebie za 10 lat średnio miesięcznie\n"
-           +"będzie zarabiał absolwent twojego kierunku \n"
-           + "Uniwersytetu Ekonomicznego?";
+           +"będzie zarabiał brutto absolwent twojego\n"
+           + "kierunku Uniwersytetu Ekonomicznego?";
    String pytanie2="Uważasz, że za 10 lat będziesz zarabiać więcej\n"
            + "czy mniej niż podana przez Ciebie średnia?";
    String odp1="Więcej";

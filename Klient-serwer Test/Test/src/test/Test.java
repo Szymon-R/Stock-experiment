@@ -23,7 +23,7 @@ public class Test {
     
     
   // This chat server can accept up to maxClientsCount clients' connections.
-     int maxClientsCount = 20;
+     static int maxClientsCount = 80;
      clientThread[] clients = new clientThread[maxClientsCount];
 
     public static void main(String args[]) {
@@ -37,7 +37,7 @@ public class Test {
             {
               if (t1.clients[i] == null) 
               {
-                t1.clients[i] = new clientThread(Integer.toString(i+1));
+                t1.clients[i] = new clientThread(Integer.toString(i+1),maxClientsCount);
                 t1.clients[i].start();
               }
             }

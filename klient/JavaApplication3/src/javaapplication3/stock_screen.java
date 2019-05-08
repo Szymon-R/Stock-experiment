@@ -46,14 +46,31 @@ public class stock_screen extends javax.swing.JFrame {
     Timer t;
     data_base data_b=new data_base();
     wait_screen ws=new wait_screen();
-    String pytanie = "Masz do wyboru 15 spółek notowanych na\n"
+ /*   String pytanie = "Masz do wyboru 15 spółek notowanych na\n"
             + "amerykańskiej giełdzie. Dla każdej spółki\n"
             + "przedstawione są dane historyczne notowań\n"
             + "z ostatnich 30 dni oraz wyświetlany jest bieżący\n"
             + "kurs akcji. Twoim zadaniem jest zainwestowanie\n"
             + "100 000USD w jedną, wybraną spółkę, tak by\n"
-            + "osiągnąć jak największy zysk z inwestycji.";
-
+            + "osiągnąć jak największy zysk z inwestycji.";*/
+String pytanie ="Poniżej przedstawiona jest symulacja giełdy na\n"
+              + "podstawie rzeczywistych danych. Masz do wyboru\n"
+              + "15 spółek notowanych na amerykańskiej\n"
+              + "giełdzie. Dla każdej spółki przedstawione\n"
+              + "są dane historyczne notowań z 30 dni\n"
+              + "poprzedzających dzień inwestycji oraz\n"
+              + "wyświetlany jest 'bieżący' kurs, czyli\n"
+              + "czyli kurs w momencie podejmowania decyzji\n"
+              + "(po upływie wspomnianych 30 dni). Dzień\n"
+              + "inwestycji pochodzi z ubiegłego miesiąca,\n"
+              + "został wybrany losowo. Twoim zadaniem jest\n"
+              + "zainwestowanie 100 000USD w jedną, wybraną\n"
+              + "spółkę, tak by osiągnąć jak największy\n"
+              + "zysk z inwestycji. Twoja inwestycja potrwa\n"
+              + "4 dni, czyli po podjęciu przez Ciebie decyzji,\n"
+              + "obliczona zostanie wartość Twojego portfela,\n"
+              + "uwzględniając rzeczywiste kształtowanie się cen\n"
+              + "akcji w kolejnych dniach.";
     public stock_screen(ClientSide ClientSide1) {
         this.ClientSide1 = ClientSide1;
         this.one_investment = ClientSide1.one_investment;
@@ -116,7 +133,7 @@ public class stock_screen extends javax.swing.JFrame {
         data_b.create_data_generalmotors(quotes.get(quotes.size()-1).prices);
         data_b.historical_data_generalmotors(quotes.get(quotes.size()-1).quotes);
         
-        quotes.add(new Quote("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
+        quotes.add(new Quote("Procter&Gamble","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
         data_b.create_data_proctergamble(quotes.get(quotes.size()-1).prices);
         data_b.historical_data_proctergamble(quotes.get(quotes.size()-1).quotes);
         
@@ -151,7 +168,7 @@ public class stock_screen extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -186,7 +203,7 @@ public class stock_screen extends javax.swing.JFrame {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
+        jTextArea1.setRows(8);
         jTextArea1.setText("Tłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia\nTłumaczenie polecenia");
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -303,8 +320,8 @@ public class stock_screen extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
@@ -569,6 +586,10 @@ public void wait_for_response()
     }
     sending += "#";
     ClientSide1.send_data(sending);
+    t.cancel();
+    t.purge();
+    update_timer.cancel();
+    update_timer.purge();
     dispose();
     Results_screen rs = new Results_screen(ClientSide1);
     rs.setLocationRelativeTo(null);

@@ -31,14 +31,28 @@ public class Results_screen extends javax.swing.JFrame {
         jTextArea1.setVisible(false);  
         jScrollPane1.setVisible(false);
         jComboBox1.setVisible(false);
+        
         final SwingWorker<String, Void> worker1 =  new SwingWorker<String, Void>() 
         {
 
             @Override
             protected String doInBackground() throws Exception {
-                
-                String result=ClientSide1.read_data(1000);
-                System.out.println(result);
+                String result="";
+                while(true)
+                {
+                    if(ClientSide1.in.available()>0)
+                    {
+                        ClientSide1.in.read();
+                    }
+                    result=ClientSide1.read_data(1000);
+                    if(result.contains("R"))
+                    {
+                        result=result.replace("R","");
+                        break;
+                    }
+                        
+                }
+
                 return result;
             }
 
@@ -50,7 +64,9 @@ public class Results_screen extends javax.swing.JFrame {
                 int end;
                 String output="";
                 try
-                {output=get();}
+                {
+                    output=get();
+                }
                 catch(Exception e){};
                 start=output.indexOf(":");
                 end=output.indexOf(";");
@@ -64,8 +80,8 @@ public class Results_screen extends javax.swing.JFrame {
                 client_count=Integer.parseInt(temp);
                 jTextArea1.setText("Oszacuj, które miejsce pośród "+temp+" uczestników\n"
                         + "zająłeś. Za poprawne podanie zajętego przez\n"
-                        + "Ciebie miejsca otrzymasz 2 punktów, za\n"
-                        + " każdą różnicę miejsca 0.2 punktu mniej.");
+                        + "Ciebie miejsca otrzymasz 2 punkty, za\n"
+                        + "każdą różnicę miejsca 0.3 punktu mniej.");
                 jTextArea1.setVisible(true);
                 jScrollPane1.setVisible(true);
                 jComboBox1.setVisible(true);

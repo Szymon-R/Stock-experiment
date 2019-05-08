@@ -395,6 +395,11 @@ public class Question4 extends javax.swing.JFrame {
                         protected Boolean doInBackground() throws Exception {
                             ws.setVisible(true);
                             String lala;
+                            int a=ClientSide1.in.available();
+                            if(ClientSide1.in.available()>0)
+                            {
+                                ClientSide1.in.read();
+                            }
                             while(true)
                             {
                                 lala=ClientSide1.read_data(1000);

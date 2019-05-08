@@ -20,13 +20,14 @@ public class clientImage {
     {
         this.input=input;
         this.output=output;
+        income=-100000;
     }
     
     String ID;
     String name;
     String surname;
     double income;
-
+    String reality="";
     double grade1=0;
     double grade2=0;
     Vector<String> answers=new Vector<String>(); 
@@ -53,6 +54,7 @@ public class clientImage {
     public void read_investments(String data)
     {
         int counter=0;
+        invest.clear();
         while(!"".equals(data))
         {
             invest.add(new Investment());

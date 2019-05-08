@@ -249,6 +249,7 @@ public class Serwer_API extends javax.swing.JFrame {
             out.write("Którą pozycję zająłeś\t");
             out.write("Przychód\t");
             out.write("Rzeczywista pozycja\t");
+            out.write("Liczba punktów\t");
             out.write("\n");
             for(int i=0; i<client_count;++i)
             {
@@ -259,6 +260,12 @@ public class Serwer_API extends javax.swing.JFrame {
                     out.write(clients.get(i).answers.get(j));
                     out.write("\t");
                 }
+                out.write(Double.toString(clients.get(i).income));
+                out.write("\t");
+                out.write(clients.get(i).reality);
+                out.write("\t");
+                out.write(Double.toString(clients.get(i).grade1+clients.get(i).grade2));
+                out.write("\t");
             }
             out.close();
         }
@@ -274,35 +281,35 @@ public class Serwer_API extends javax.swing.JFrame {
         //dane historyczne są z 30 ostatnich aż do kursu otwarcia z dnia 29.04
         //dane wynikowe są z zamknięcia dnia 30.04. Okres inwwestycji to końcówka dnia 29.04 i cały dzień 30.04
         quotes.add(new Quote_price("Coca Cola","KO","https://www.nasdaq.com/symbol/ko/historical","https://www.nasdaq.com/symbol/ko/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(49.06);
+        quotes.get(quotes.size()-1).current_price=Double.toString(48.72);
         quotes.add(new Quote_price("Google","GOOG","https://www.nasdaq.com/symbol/goog/historical","https://www.nasdaq.com/symbol/goog/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(1188.48);
+        quotes.get(quotes.size()-1).current_price=Double.toString(1185.4);
         quotes.add(new Quote_price("Apple","AAPL","https://www.nasdaq.com/symbol/aapl/historical","https://www.nasdaq.com/symbol/aapl/real-time")); 
-        quotes.get(quotes.size()-1).current_price=Double.toString(200.37);
+        quotes.get(quotes.size()-1).current_price=Double.toString(211.75);
         quotes.add(new Quote_price("Facebook","FB","https://www.nasdaq.com/symbol/fb/historical","https://www.nasdaq.com/symbol/fb/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(193.4);
+        quotes.get(quotes.size()-1).current_price=Double.toString(195.47);
         quotes.add(new Quote_price("Tesla","TSLA","https://www.nasdaq.com/symbol/TSLA/historical","https://www.nasdaq.com/symbol/TSLA/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(238.69);
+        quotes.get(quotes.size()-1).current_price=Double.toString(255.03);
         quotes.add(new Quote_price("Amazon","AMZN","https://www.nasdaq.com/symbol/AMZN/historical","https://www.nasdaq.com/symbol/AMZN/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(1926.52);
+        quotes.get(quotes.size()-1).current_price=Double.toString(1962.46);
         quotes.add(new Quote_price("Microsoft","MSFT","https://www.nasdaq.com/symbol/MSFT/historical","https://www.nasdaq.com/symbol/MSFT/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(130.6);
+        quotes.get(quotes.size()-1).current_price=Double.toString(128.9);
         quotes.add(new Quote_price("Intel","INTC","https://www.nasdaq.com/symbol/INTC/historical","https://www.nasdaq.com/symbol/INTC/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(51.04);
+        quotes.get(quotes.size()-1).current_price=Double.toString(51.75);
         quotes.add(new Quote_price("Groupon","GRPN","https://www.nasdaq.com/symbol/GRPN/historical","https://www.nasdaq.com/symbol/GRPN/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(3.52);
+        quotes.get(quotes.size()-1).current_price=Double.toString(3.59);
         quotes.add(new Quote_price("EBay","EBAY","https://www.nasdaq.com/symbol/EBAY/historical","https://www.nasdaq.com/symbol/EBAY/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(38.75);
+        quotes.get(quotes.size()-1).current_price=Double.toString(38.28);
         quotes.add(new Quote_price("Starbucks","SBUX","https://www.nasdaq.com/symbol/SBUX/historical","https://www.nasdaq.com/symbol/SBUX/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(77.68);
+        quotes.get(quotes.size()-1).current_price=Double.toString(78.05);
         quotes.add(new Quote_price("GoPro","GPRO","https://www.nasdaq.com/symbol/GPRO/historical","https://www.nasdaq.com/symbol/GPRO/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(5.91);
+        quotes.get(quotes.size()-1).current_price=Double.toString(6.03);
         quotes.add(new Quote_price("SunPower","SPWR","https://www.nasdaq.com/symbol/SPWR/historical","https://www.nasdaq.com/symbol/SPWR/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(7.22);
+        quotes.get(quotes.size()-1).current_price=Double.toString(7.54);
         quotes.add(new Quote_price("General Motors","GM","https://www.nasdaq.com/symbol/gm/historical","https://www.nasdaq.com/symbol/gm/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(38.95);
-        quotes.add(new Quote_price("Procter&Gamble ","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
-        quotes.get(quotes.size()-1).current_price=Double.toString(106.48);
+        quotes.get(quotes.size()-1).current_price=Double.toString(38.8);
+        quotes.add(new Quote_price("Procter&Gamble","PG","https://www.nasdaq.com/symbol/pg/historical","https://www.nasdaq.com/symbol/pg/real-time"));
+        quotes.get(quotes.size()-1).current_price=Double.toString(106.08);
 
     
     /**
@@ -333,8 +340,6 @@ public class Serwer_API extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -345,7 +350,7 @@ public class Serwer_API extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Połączony", "Płeć", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja", "Pozycja", "Rzeczywistość"
+                "ID", "Połączony", "Imię i naziwsko", "Czy inwestujesz na giełdzie", "Czy wycofałbyś się z bitcoina", "Ile będziesz zarabiał", "Czy więcej niż inni", "Kwota netto", "Przedział błędu", "Inwestycja", "Pozycja", "Rzeczywistość"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -360,13 +365,11 @@ public class Serwer_API extends javax.swing.JFrame {
         jTable1.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
             jTable1.getColumnModel().getColumn(1).setMinWidth(60);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(60);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(60);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(80);
             jTable1.getColumnModel().getColumn(3).setMinWidth(150);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
             jTable1.getColumnModel().getColumn(3).setMaxWidth(150);
@@ -393,7 +396,6 @@ public class Serwer_API extends javax.swing.JFrame {
 
         jLabel1.setText("Liczba uczestników");
 
-        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("0");
@@ -464,11 +466,6 @@ public class Serwer_API extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Usuń użytkownika");
-
-        jButton8.setText("Dodaj użytkownika");
-        jButton8.setToolTipText("");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -488,13 +485,8 @@ public class Serwer_API extends javax.swing.JFrame {
             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jButton7))
+                .addComponent(jLabel3)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton8))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -507,17 +499,13 @@ public class Serwer_API extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                .addGap(23, 23, 23)
+                .addGap(60, 60, 60)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -548,32 +536,46 @@ public class Serwer_API extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
-            get_prices();         
-         
-            for(int i=0; i<clients.size();++i)
+            Object[] options = {"Tak","Nie"};
+            int n = JOptionPane.showOptionDialog(this,
+             "Czy liczba użytkowników jest poprawna?",
+             "Sprawdzenie",
+             JOptionPane.YES_NO_OPTION,
+             JOptionPane.QUESTION_MESSAGE,
+             null,     //do not use a custom Icon
+             options,  //the titles of buttons
+             options[0]); //default button title
+            get_prices();  
+            if(n==0)
             {
-                int ile=clients.get(i).answers.size();
-                clients.get(i).income=0;
-                if(clients.get(i).answers.size()==8)
+                for(int i=0; i<clients.size();++i)
                 {
-                    clients.get(i).read_investments(clients.get(i).answers.get(7));
-                    clients.get(i).calculate_income(quotes);
-                    for(int j=0; j<clients.get(i).invest.size();++j)
+                    int ile=clients.get(i).answers.size();
+                    if(clients.get(i).answers.size()==8)
                     {
-                        clients.get(i).income+=Double.parseDouble(clients.get(i).invest.get(j).income);
+                        clients.get(i).income=0;
+                        clients.get(i).read_investments(clients.get(i).answers.get(7));
+                        clients.get(i).calculate_income(quotes);
+                        for(int j=0; j<clients.get(i).invest.size();++j)
+                        {
+                            clients.get(i).income+=Double.parseDouble(clients.get(i).invest.get(j).income);
+                        }
                     }
+
                 }
-                
+
+                for(int i=0;i<clients.size();++i)
+                {
+                       String answer="R:"+Double.toString(clients.get(i).income)+";";
+                       answer+=jTextField1.getText()+"#";
+                       clients.get(i).output.add(answer);
+                } 
+                 write_data();
             }
-            
-            for(int i=0;i<clients.size();++i)
-            {
-                   String answer=":"+Double.toString(clients.get(i).income)+";";
-                   answer+=jTextField1.getText()+"#";
-                   clients.get(i).output.add(answer);
-            } 
-             write_data();
+            else if(n==1)
+                return;
+         
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -594,51 +596,79 @@ public class Serwer_API extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
+        try
+        {
         
         int row=jTable1.getSelectedRow();
         String temp=(String)model.getValueAt(row, 0);
         int value=find_client(temp);
         clients.get(value-1).output.add("GoStock");
-        
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
         
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-                  
-        if(quotes.size()==0) 
+         try
+         {
+                    if(quotes.size()==0) 
             get_prices();    
-        int row=jTable1.getSelectedRow();
-        String temp=(String)model.getValueAt(row, 0);
-        int value=find_client(temp);
-        int ile=clients.get(value-1).answers.size();
-        clients.get(value-1).income=0;
-        if(clients.get(value-1).answers.size()==8)
-        {
-            clients.get(value-1).read_investments(clients.get(value-1).answers.get(7));
-            clients.get(value-1).calculate_income(quotes);
-            for(int j=0; j<clients.get(value-1).invest.size();++j)
+            int row=jTable1.getSelectedRow();
+            String temp=(String)model.getValueAt(row, 0);
+            int value=find_client(temp);
+            int ile=clients.get(value-1).answers.size();
+            clients.get(value-1).income=0;
+            if(clients.get(value-1).answers.size()==8)
             {
-                clients.get(value-1).income+=Double.parseDouble(clients.get(value-1).invest.get(j).income);
+                clients.get(value-1).read_investments(clients.get(value-1).answers.get(7));
+                clients.get(value-1).calculate_income(quotes);
+                for(int j=0; j<clients.get(value-1).invest.size();++j)
+                {
+                    clients.get(value-1).income+=Double.parseDouble(clients.get(value-1).invest.get(j).income);
+                }
             }
-        }
-       String answer=":"+Double.toString(clients.get(value-1).income)+";";
-       answer+=jTextField1.getText()+"#";
-       clients.get(value-1).output.add(answer);
+           String answer="R:"+Double.toString(clients.get(value-1).income)+";";
+           answer+=jTextField1.getText()+"#";
+           clients.get(value-1).output.add(answer); 
+         }
+         catch(Exception e)
+         {
+             System.out.println(e);
+         }
+
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     try
+     {
         grade_answers();
+        int row;
+        for(int i=0; i<clients.size();++i)
+        {
+            row=find_row(clients.get(i).ID);
+            model.setValueAt(i+1, row-1, 11);
+        }
+        
         for(int i=0; i<clients.size();++i)
         {
             double points=clients.get(i).grade1+clients.get(i).grade2;
+            points=Math.round(points);
             if(points>3.0)
                 points=3.0;
-            clients.get(i).output.add(Double.toString(points));
+            clients.get(i).output.add("L"+Double.toString(points));
         }
          write_data();
+     }
+     catch(Exception e)
+     {
+         System.out.println(e);
+     }
+
     }//GEN-LAST:event_jButton2ActionPerformed
     
     public void grade_answers()
@@ -650,25 +680,29 @@ public class Serwer_API extends javax.swing.JFrame {
             int section;
             for(int i=0; i<clients.size();++i)
             {
-                //tu jest kwota którą ktoś wpisał
-                answer=Double.parseDouble(clients.get(i).answers.get(5));
-                
-                //do któego przedziału myśli, że się łapie
-                section=get_percentage(i);
-                if(section==0)
-                    continue;
-                section-=1;
-                //do któego przedziału łapie się wpisana kwota
-                counter=0;
-                for(counter=0; counter<sections.size();++counter)
-                {
-                    if(answer>sections.get(counter).min&&answer<sections.get(counter).max)
-                        break;
+                    //tu jest kwota którą ktoś wpisał
+                    if(clients.get(i).answers.size()>=6)
+                    {
+                    answer=Double.parseDouble(clients.get(i).answers.get(5));
+
+                    //do któego przedziału myśli, że się łapie
+                    section=get_percentage(i);
+                    if(section==0)
+                        continue;
+                    section-=1;
+                    //do któego przedziału łapie się wpisana kwota
+                    counter=0;
+                    for(counter=0; counter<sections.size();++counter)
+                    {
+                        if(answer>sections.get(counter).min&&answer<sections.get(counter).max)
+                            break;
+                    }
+                    if(section==counter)
+                        clients.get(i).grade1=(1.5-counter*0.5);
+                    else
+                        clients.get(i).grade1=0;
                 }
-                if(section==counter)
-                    clients.get(i).grade1=(1.5-counter*0.5);
-                else
-                    clients.get(i).grade1=0;
+
             }
             //Druga część oceniania
             SortByIncome sorting = new SortByIncome();
@@ -678,19 +712,23 @@ public class Serwer_API extends javax.swing.JFrame {
             int difference;
             for(int i=0; i<clients.size();++i)
             {
-                position=Integer.parseInt(clients.get(i).answers.get(8));
-                reality=i+1;
-                difference=Math.abs(position-reality);
-                clients.get(i).answers.add(Double.toString(clients.get(i).income));
-                clients.get(i).answers.add(Integer.toString(reality));
-                for(int j=0; j<10;++j)
+                if(clients.get(i).answers.size()>=9)
                 {
-                    if(difference==j)
+                    position=Integer.parseInt(clients.get(i).answers.get(8));
+                    reality=i+1;
+                    difference=Math.abs(position-reality);
+                  //  clients.get(i).answers.add(Double.toString(clients.get(i).income));
+                    clients.get(i).reality=Integer.toString(reality);
+                    for(int j=0; j<=6;++j)
                     {
-                       clients.get(i).grade2=(2-0.2*j);
-                       break;
+                        if(difference==j)
+                        {
+                           clients.get(i).grade2=(2-0.3*j);
+                           break;
+                        }
                     }
                 }
+
             }
         write_data();
         }
@@ -701,15 +739,19 @@ public class Serwer_API extends javax.swing.JFrame {
 
     public int get_percentage(int which)
     {
-        String answer=clients.get(which).answers.get(6);
-        if(answer.equals("[0-10%]"))
-            return 1;
-        else if(answer.equals("[11-20%]"))
-            return 2;
-        else if(answer.equals("[more than 50%]"))
-            return 3;
-        else
-            return 0;
+        if(clients.get(which).answers.size()>=6)
+        {
+            String answer=clients.get(which).answers.get(6);
+            if(answer.equals("[0-10%]"))
+                return 1;
+            else if(answer.equals("[11-20%]"))
+                return 2;
+            else if(answer.equals("[more than 50%]"))
+                return 3;
+            else
+                return 0;
+        }
+        return 0;
     }
     public void new_client(BlockingQueue<String> input,BlockingQueue<String> output,String ID)
     {
@@ -771,8 +813,6 @@ public class Serwer_API extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

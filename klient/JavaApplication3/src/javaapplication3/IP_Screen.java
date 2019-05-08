@@ -172,11 +172,11 @@ public class IP_Screen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             
-   /* if(!ClientSide1.validIP(jTextField3.getText()))
+    if(!ClientSide1.validIP(jTextField3.getText()))
     {
         JOptionPane.showMessageDialog(this, "Wpisane IP ma nieprawidłową formę.","Problem z IP",JOptionPane.WARNING_MESSAGE);
         return;
-    }*/
+    }
     //else
     {
         //System.out.println(Integer.toString(ClientSide1.findAvaliable(jTextField3.getText(), 6000, 6100)));
@@ -194,8 +194,8 @@ public class IP_Screen extends javax.swing.JFrame {
         }
         else
            
-        //if(ClientSide1.connect(temp, jTextField3.getText())!=1)
-       if(ClientSide1.connect(temp, "192.168.1.6")!=1)
+       if(ClientSide1.connect(temp, jTextField3.getText())!=1)
+       //if(ClientSide1.connect(temp, "192.168.1.6")!=1)
         {
             JOptionPane.showMessageDialog(this,"Nie udało się połączyć z serwerem","Nieudane połączenie",JOptionPane.WARNING_MESSAGE);
             System.out.println("Nie udało się połączyć z serwerem");

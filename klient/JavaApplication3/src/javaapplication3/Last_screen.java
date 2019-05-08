@@ -28,8 +28,21 @@ public class Last_screen extends javax.swing.JFrame {
 
             @Override
             protected String doInBackground() throws Exception {
-                
-                String result=ClientSide1.read_data(1000);
+                String result="";
+                while(true)
+                {
+                    if(ClientSide1.in.available()>0)
+                    {
+                        ClientSide1.in.read();
+                    }
+                    result=ClientSide1.read_data(1000);
+                    if(result.contains("L"))
+                    {
+                        result=result.replace("L","");
+                        break;
+                    }     
+                }
+
                 return result;
             }
 
